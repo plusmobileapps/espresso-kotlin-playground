@@ -1,11 +1,13 @@
 package com.plusmobileapps.kotlinopenespresso.data
 
+import com.plusmobileapps.kotlinopenespresso.OpenForTest
 import com.plusmobileapps.kotlinopenespresso.data.model.LoggedInUser
 import java.io.IOException
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
+@OpenForTest
 class LoginDataSource {
 
     fun login(username: String, password: String): Result<LoggedInUser> {
