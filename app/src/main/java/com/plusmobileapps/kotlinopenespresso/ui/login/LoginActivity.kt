@@ -12,6 +12,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.plusmobileapps.kotlinopenespresso.databinding.ActivityLoginBinding
 
 import com.plusmobileapps.kotlinopenespresso.R
@@ -61,8 +62,6 @@ class LoginActivity : AppCompatActivity() {
             }
             setResult(Activity.RESULT_OK)
 
-            //Complete and destroy login activity once successful
-            finish()
         })
 
         username.afterTextChanged {
@@ -99,14 +98,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
-        Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
-            Toast.LENGTH_LONG
-        ).show()
+        val welcome = getString(R.string.welcome, model.displayName)
+        binding.loggedOutGroup?.isVisible = false
+        binding.loggenInGreeting?.text = welcome
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
