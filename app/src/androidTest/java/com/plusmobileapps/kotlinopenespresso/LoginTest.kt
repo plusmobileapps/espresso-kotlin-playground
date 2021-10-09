@@ -49,7 +49,7 @@ class LoginTest {
         ActivityScenario.launch(LoginActivity::class.java)
 
         login {
-            onWelcomeGreeting().verifyText("Login failed")
+            onWelcomeGreeting().verifyText("Login failed!")
         }
     }
 
