@@ -24,7 +24,8 @@ class LoginTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    @BindValue @JvmField
+    @BindValue
+    @JvmField
     val loginDataSource: LoginDataSource = mockk(relaxed = true)
 
     private val userName = "some-awesome-user-name"
@@ -32,7 +33,7 @@ class LoginTest {
 
     @Test
     fun successfulLogin() {
-        every { loginDataSource.login(userName, password) } returns Result.Success(LoggedInUser("some-id", userName))
+        everyLoginReturns { Result.Success(LoggedInUser("some-id", userName)) }
 
         ActivityScenario.launch(LoginActivity::class.java)
 
@@ -43,7 +44,7 @@ class LoginTest {
 
     @Test
     fun errorLogin() {
-        every { loginDataSource.login(userName, password) } returns Result.Error(IllegalArgumentException())
+        everyLoginReturns { Result.Error(IllegalArgumentException()) }
 
         ActivityScenario.launch(LoginActivity::class.java)
 
@@ -59,5 +60,9 @@ class LoginTest {
             onSignInOrRegisterButton().click()
             block()
         }
+    }
+
+    private fun everyLoginReturns(result: () -> Result<LoggedInUser>) {
+        every { loginDataSource.login(userName, password) } returns result()
     }
 }
