@@ -1,23 +1,18 @@
 package com.plusmobileapps.kotlinopenespresso
 
 import androidx.test.core.app.ActivityScenario
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.plusmobileapps.kotlinopenespresso.data.LoginDataSource
 import com.plusmobileapps.kotlinopenespresso.data.Result
 import com.plusmobileapps.kotlinopenespresso.data.model.LoggedInUser
-import com.plusmobileapps.kotlinopenespresso.di.LoginModule
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.UninstallModules
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@UninstallModules(LoginModule::class)
 @HiltAndroidTest
 class LoginTest {
 
@@ -49,7 +44,7 @@ class LoginTest {
         ActivityScenario.launch(LoginActivity::class.java)
 
         login {
-            onWelcomeGreeting().verifyText("Login failed!")
+            onWelcomeGreeting().verifyText("Login failed")
         }
     }
 
