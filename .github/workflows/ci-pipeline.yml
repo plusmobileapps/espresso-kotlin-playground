@@ -78,5 +78,13 @@ jobs:
           disable-animations: true
           script: ./gradlew connectedCheck
 
+      - name: Upload Test Reports Folder
+        uses: actions/upload-artifact@v2
+        if: ${{ always() }} # IMPORTANT: Upload reports regardless of status
+        with:
+          name: reports
+          path: app/build/reports/androidTests
+
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
+        if: ${{ always() }}
