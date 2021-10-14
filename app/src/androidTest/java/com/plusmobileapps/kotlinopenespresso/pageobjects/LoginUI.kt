@@ -2,9 +2,9 @@ package com.plusmobileapps.kotlinopenespresso.pageobjects
 
 import androidx.test.espresso.ViewInteraction
 import com.plusmobileapps.kotlinopenespresso.R
-import com.plusmobileapps.kotlinopenespresso.click
-import com.plusmobileapps.kotlinopenespresso.toViewInteraction
-import com.plusmobileapps.kotlinopenespresso.typeText
+import com.plusmobileapps.kotlinopenespresso.extension.click
+import com.plusmobileapps.kotlinopenespresso.extension.toViewInteraction
+import com.plusmobileapps.kotlinopenespresso.extension.typeText
 
 class LoginUI {
 

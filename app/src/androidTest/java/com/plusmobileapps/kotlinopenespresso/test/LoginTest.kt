@@ -6,7 +6,7 @@ import com.plusmobileapps.kotlinopenespresso.data.Result
 import com.plusmobileapps.kotlinopenespresso.data.model.LoggedInUser
 import com.plusmobileapps.kotlinopenespresso.pageobjects.LoginUI
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
-import com.plusmobileapps.kotlinopenespresso.verifyText
+import com.plusmobileapps.kotlinopenespresso.extension.verifyText
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
