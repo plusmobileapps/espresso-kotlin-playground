@@ -1,12 +1,10 @@
 package com.plusmobileapps.kotlinopenespresso.test
 
 import androidx.test.core.app.ActivityScenario
-import com.plusmobileapps.kotlinopenespresso.click
 import com.plusmobileapps.kotlinopenespresso.data.LoginDataSource
 import com.plusmobileapps.kotlinopenespresso.data.Result
 import com.plusmobileapps.kotlinopenespresso.data.model.LoggedInUser
 import com.plusmobileapps.kotlinopenespresso.pageobjects.LoginUI
-import com.plusmobileapps.kotlinopenespresso.typeText
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
 import com.plusmobileapps.kotlinopenespresso.verifyText
 import dagger.hilt.android.testing.BindValue
@@ -27,18 +25,17 @@ class LoginTest {
     @JvmField
     val loginDataSource: LoginDataSource = mockk(relaxed = true)
 
-    private val userName = "some-awesome-user-name"
+    private val username = "some-awesome-user-name"
     private val password = "password123"
 
     @Test
     fun successfulLogin() {
-        everyLoginReturns { Result.Success(LoggedInUser("some-id", userName)) }
+        everyLoginReturns { Result.Success(LoggedInUser("some-id", username)) }
 
         launchLogin {
-            onEmail().typeText(userName)
-            onPassword().typeText(password)
+            enterInfo(username = username, password = password)
         }.submitAndGoToResultUI {
-            onBodyText().verifyText("Welcome $userName!")
+            onBodyText().verifyText("Welcome $username!")
         }
     }
 
@@ -47,8 +44,7 @@ class LoginTest {
         everyLoginReturns { Result.Error(IllegalArgumentException()) }
 
         launchLogin {
-            onEmail().typeText(userName)
-            onPassword().typeText(password)
+            enterInfo(username = username, password = password)
         }.submitAndGoToResultUI {
             onBodyText().verifyText("Login failed")
         }
@@ -60,6 +56,6 @@ class LoginTest {
     }
 
     private fun everyLoginReturns(result: () -> Result<LoggedInUser>) {
-        every { loginDataSource.login(userName, password) } returns result()
+        every { loginDataSource.login(username, password) } returns result()
     }
 }
