@@ -1,10 +1,14 @@
-package com.plusmobileapps.kotlinopenespresso
+package com.plusmobileapps.kotlinopenespresso.test
 
 import androidx.test.core.app.ActivityScenario
+import com.plusmobileapps.kotlinopenespresso.click
 import com.plusmobileapps.kotlinopenespresso.data.LoginDataSource
 import com.plusmobileapps.kotlinopenespresso.data.Result
 import com.plusmobileapps.kotlinopenespresso.data.model.LoggedInUser
+import com.plusmobileapps.kotlinopenespresso.pageobjects.LoginUI
+import com.plusmobileapps.kotlinopenespresso.typeText
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
+import com.plusmobileapps.kotlinopenespresso.verifyText
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -30,10 +34,11 @@ class LoginTest {
     fun successfulLogin() {
         everyLoginReturns { Result.Success(LoggedInUser("some-id", userName)) }
 
-        ActivityScenario.launch(LoginActivity::class.java)
-
-        login {
-            onWelcomeGreeting().verifyText("Welcome $userName!")
+        launchLogin {
+            onEmail().typeText(userName)
+            onPassword().typeText(password)
+        }.submitAndGoToResultUI {
+            onBodyText().verifyText("Welcome $userName!")
         }
     }
 
@@ -41,20 +46,17 @@ class LoginTest {
     fun errorLogin() {
         everyLoginReturns { Result.Error(IllegalArgumentException()) }
 
-        ActivityScenario.launch(LoginActivity::class.java)
-
-        login {
-            onWelcomeGreeting().verifyText("Login failed")
+        launchLogin {
+            onEmail().typeText(userName)
+            onPassword().typeText(password)
+        }.submitAndGoToResultUI {
+            onBodyText().verifyText("Login failed")
         }
     }
 
-    private fun login(block: LoginUI.() -> Unit) {
-        LoginUI.apply {
-            onEmail().typeText(userName)
-            onPassword().typeText(password)
-            onSignInOrRegisterButton().click()
-            block()
-        }
+    private fun launchLogin(block: LoginUI.() -> Unit = {}): LoginUI {
+        ActivityScenario.launch(LoginActivity::class.java)
+        return LoginUI().apply(block)
     }
 
     private fun everyLoginReturns(result: () -> Result<LoggedInUser>) {
