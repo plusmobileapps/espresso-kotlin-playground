@@ -2,11 +2,15 @@ package com.plusmobileapps.kotlinopenespresso.pageobjects
 
 import androidx.test.espresso.ViewInteraction
 import com.plusmobileapps.kotlinopenespresso.R
-import com.plusmobileapps.kotlinopenespresso.extension.click
-import com.plusmobileapps.kotlinopenespresso.extension.toViewInteraction
-import com.plusmobileapps.kotlinopenespresso.extension.typeText
+import com.plusmobileapps.kotlinopenespresso.extension.*
 
-class LoginUI {
+class LoginUI : BaseUI {
+
+    override fun assertScreen() {
+        onUsername().verifyVisible()
+        onPassword().verifyVisible()
+        onSignInOrRegisterButton().verifyVisible()
+    }
 
     fun onUsername(): ViewInteraction = R.id.username.toViewInteraction()
     fun onPassword(): ViewInteraction = R.id.password.toViewInteraction()
@@ -17,9 +21,6 @@ class LoginUI {
         onPassword().typeText(password)
     }
 
-    fun submitAndGoToResultUI(block: ResultUI.() -> Unit): ResultUI {
-        onSignInOrRegisterButton().click()
-        return ResultUI().apply(block)
-    }
-
+    fun submitAndGoToResultUI(block: ScopedUI<ResultUI>): ResultUI =
+        navigateToWithClick(onSignInOrRegisterButton(), block)
 }

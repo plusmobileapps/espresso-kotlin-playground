@@ -52,7 +52,10 @@ class LoginTest {
 
     private fun launchLogin(block: LoginUI.() -> Unit = {}): LoginUI {
         ActivityScenario.launch(LoginActivity::class.java)
-        return LoginUI().apply(block)
+        return LoginUI().apply {
+            assertScreen()
+            block()
+        }
     }
 
     private fun everyLoginReturns(result: () -> Result<LoggedInUser>) {
