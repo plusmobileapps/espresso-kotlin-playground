@@ -16,6 +16,7 @@ typealias ScopedUI <T> = T.() -> Unit
 inline fun <reified T : BaseUI> BaseUI.navigateToWithClick(viewInteraction: ViewInteraction, block: ScopedUI<T>): T {
     viewInteraction.click()
     return T::class.java.newInstance().apply {
+        Thread.sleep(1000L) // TODO add idling resource to get rid of this
         assertScreen()
         block()
     }
