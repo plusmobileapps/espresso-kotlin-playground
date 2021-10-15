@@ -20,4 +20,3 @@ inline fun <reified T : BaseUI> BaseUI.navigateToWithClick(viewInteraction: View
         block()
     }
 }
-

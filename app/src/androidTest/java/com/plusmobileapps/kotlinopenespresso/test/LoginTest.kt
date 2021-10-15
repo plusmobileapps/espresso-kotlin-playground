@@ -1,12 +1,12 @@
 package com.plusmobileapps.kotlinopenespresso.test
 
-import androidx.test.core.app.ActivityScenario
+import com.plusmobileapps.kotlinopenespresso.R
 import com.plusmobileapps.kotlinopenespresso.data.LoginDataSource
 import com.plusmobileapps.kotlinopenespresso.data.Result
 import com.plusmobileapps.kotlinopenespresso.data.model.LoggedInUser
+import com.plusmobileapps.kotlinopenespresso.extension.*
 import com.plusmobileapps.kotlinopenespresso.pageobjects.LoginUI
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
-import com.plusmobileapps.kotlinopenespresso.extension.verifyText
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -50,8 +50,18 @@ class LoginTest {
         }
     }
 
-    private fun launchLogin(block: LoginUI.() -> Unit = {}): LoginUI {
-        ActivityScenario.launch(LoginActivity::class.java)
+    @Test
+    fun tooShortOfPasswordError() {
+        launchLogin {
+            onUsername().typeText("1")
+            onPassword().typeText("4")
+            onUsername().typeText("2")
+            onPassword().verifyError(R.string.invalid_password)
+        }
+    }
+
+    private fun launchLogin(block: ScopedUI<LoginUI> = {}): LoginUI {
+        launchActivity<LoginActivity>()
         return LoginUI().apply {
             assertScreen()
             block()
