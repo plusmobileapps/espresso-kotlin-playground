@@ -5,7 +5,9 @@ import com.plusmobileapps.kotlinopenespresso.data.model.LoggedInUser
 import com.plusmobileapps.kotlinopenespresso.data.model.LoginRequest
 import com.plusmobileapps.kotlinopenespresso.data.model.LoginResponse
 import io.ktor.client.*
+import io.ktor.client.features.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -29,11 +31,15 @@ class LoginDataSource @Inject constructor(private val httpClient: HttpClient) {
                 contentType(ContentType.Application.Json)
                 body = Json.encodeToString(LoginRequest.serializer(), LoginRequest(username, password))
             }
-
             val fakeUser = LoggedInUser(response.id, username)
             Result.Success(fakeUser)
         } catch (e: Throwable) {
-            Result.Error(IOException("Error logging in", e))
+            val errorMessage = if (e is ClientRequestException) {
+                e.response.readText()
+            } else {
+                "Don't know the error"
+            }
+            Result.Error(IOException(errorMessage, e))
         }
     }
 

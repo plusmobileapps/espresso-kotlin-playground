@@ -32,12 +32,11 @@ class LoginViewModel @Inject constructor(
             idlingResource.increment()
             val result = loginRepository.login(username, password)
 
-            if (result is Result.Success) {
-                _loginResult.value =
-                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-            } else {
-                _loginResult.value = LoginResult(error = R.string.login_failed)
-            }
+            when (result) {
+                is Result.Error -> LoginResult(error = result.exception.message)
+                is Result.Success -> LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+            }.let { _loginResult.value = it }
+
             idlingResource.decrement()
         }
     }
