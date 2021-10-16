@@ -9,12 +9,16 @@ import com.plusmobileapps.kotlinopenespresso.data.LoginRepository
 import com.plusmobileapps.kotlinopenespresso.data.Result
 
 import com.plusmobileapps.kotlinopenespresso.R
+import com.plusmobileapps.kotlinopenespresso.util.CountingIdlingResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val loginRepository: LoginRepository,
+    private val idlingResource: CountingIdlingResource
+) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
@@ -25,6 +29,7 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
         viewModelScope.launch {
+            idlingResource.increment()
             val result = loginRepository.login(username, password)
 
             if (result is Result.Success) {
@@ -33,6 +38,7 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
             } else {
                 _loginResult.value = LoginResult(error = R.string.login_failed)
             }
+            idlingResource.decrement()
         }
     }
 
