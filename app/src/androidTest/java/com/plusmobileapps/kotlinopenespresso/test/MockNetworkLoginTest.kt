@@ -82,7 +82,7 @@ class MockNetworkLoginTest {
         LoginUI().apply {
             enterInfo(username, password)
             submitAndGoToResultUI {
-                onBodyText().verifyText("Welcome $username")
+                onBodyText().verifyText("Welcome $username!")
             }
         }
     }

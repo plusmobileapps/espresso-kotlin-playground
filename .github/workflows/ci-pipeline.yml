@@ -5,7 +5,7 @@ on:
         - main
 
 jobs:
-  build:
+  build-and-run-unit-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -29,7 +29,7 @@ jobs:
             ~/.gradle/caches/build-cache-*
           key: gradle-${{ hashFiles('checksum.txt') }}
 
-      - name: Build project
+      - name: Build project and run unit tests
         run: ./gradlew build testDebug --stacktrace
 
       - name: Publish Test Report
@@ -47,7 +47,7 @@ jobs:
           path: app/build/reports/
 
   instrumentation-test:
-    needs: build
+    needs: build-and-run-unit-tests
     runs-on: macos-latest # enables hardware acceleration in the virtual machine
     timeout-minutes: 30
     strategy:
