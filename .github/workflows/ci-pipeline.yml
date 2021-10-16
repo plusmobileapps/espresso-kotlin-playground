@@ -32,18 +32,18 @@ jobs:
       - name: Build project and run unit tests
         run: ./gradlew build testDebug --stacktrace
 
-      - name: Publish Test Report
+      - name: Publish Unit Test Report
         if: always()
         uses: mikepenz/action-junit-report@v2
         with:
           report_paths: '**/build/test-results/testDebugUnitTest/TEST-*.xml'
           require_tests: 'true'
 
-      - name: Upload build reports
+      - name: Upload build and unit test reports
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: build-reports
+          name: build-and-unit-test-reports
           path: app/build/reports/
 
   instrumentation-test:
@@ -78,5 +78,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: test-reports
+          name: instrumentation-test-reports
           path: app/build/reports/
