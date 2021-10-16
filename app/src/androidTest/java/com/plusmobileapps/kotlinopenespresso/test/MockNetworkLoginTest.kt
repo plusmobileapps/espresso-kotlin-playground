@@ -8,11 +8,9 @@ import com.plusmobileapps.kotlinopenespresso.di.NetworkModule
 import com.plusmobileapps.kotlinopenespresso.extension.launchActivity
 import com.plusmobileapps.kotlinopenespresso.extension.verifyText
 import com.plusmobileapps.kotlinopenespresso.pageobjects.LoginUI
+import com.plusmobileapps.kotlinopenespresso.pageobjects.onLogin
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
-import com.plusmobileapps.kotlinopenespresso.util.CountingIdlingResource
-import com.plusmobileapps.kotlinopenespresso.util.TestCountingIdlingResource
-import com.plusmobileapps.kotlinopenespresso.util.fullUrl
-import com.plusmobileapps.kotlinopenespresso.util.mockHttpClient
+import com.plusmobileapps.kotlinopenespresso.util.*
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -35,9 +33,9 @@ class MockNetworkLoginTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    private var getLoginResponse: (MockRequestHandler)? = null
-
     val _idlingResource = TestCountingIdlingResource()
+
+    private val networkHelper = MockNetworkTestHelper()
 
     @BindValue
     @JvmField
@@ -45,13 +43,7 @@ class MockNetworkLoginTest {
 
     @BindValue
     @JvmField
-    val mockClient: HttpClient = mockHttpClient { request: HttpRequestData ->
-        when (request.url.fullUrl) {
-            LoginDataSource.LOGIN_URL -> getLoginResponse?.invoke(this, request)
-                ?: throw NotImplementedError("${request.url.fullUrl} was called but the response handler wasn't implemented")
-            else -> error("Unhandled ${request.url.fullUrl}")
-        }
-    }
+    val mockClient: HttpClient = networkHelper.client
 
     private val username = "some-awesome-user-name"
     private val password = "password123"
@@ -64,12 +56,12 @@ class MockNetworkLoginTest {
     @After
     fun tearDown() {
         IdlingRegistry.getInstance().unregister(_idlingResource.idlingResource)
-        getLoginResponse = null
+        networkHelper.destroy()
     }
 
     @Test
     fun successfulLogin() {
-        everyLoginReturns {
+        networkHelper.everyLoginReturns {
             respond(
                 Json.encodeToString(LoginResponse("first-id"),),
                 HttpStatusCode.OK,
@@ -79,7 +71,7 @@ class MockNetworkLoginTest {
 
         val activityScenario = launchActivity<LoginActivity>()
 
-        LoginUI().apply {
+        onLogin {
             enterInfo(username, password)
         }.submitAndGoToResultUI {
             onBodyText().verifyText("Welcome $username!")
@@ -91,7 +83,7 @@ class MockNetworkLoginTest {
     @Test
     fun errorLogin() {
         val expectedError = "some error happened when logging with the mock"
-        everyLoginReturns {
+        networkHelper.everyLoginReturns {
             respond(
                 expectedError,
                 HttpStatusCode.BadRequest
@@ -100,16 +92,12 @@ class MockNetworkLoginTest {
 
         val activityScenario = launchActivity<LoginActivity>()
 
-        LoginUI().apply {
+        onLogin {
             enterInfo(username, password)
         }.submitAndGoToResultUI {
             onBodyText().verifyText(expectedError)
         }
 
         activityScenario.close()
-    }
-
-    private fun everyLoginReturns(response: MockRequestHandler) {
-        getLoginResponse = response
     }
 }
