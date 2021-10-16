@@ -77,14 +77,36 @@ class MockNetworkLoginTest {
             )
         }
 
-        launchActivity<LoginActivity>()
+        val activityScenario = launchActivity<LoginActivity>()
 
         LoginUI().apply {
             enterInfo(username, password)
-            submitAndGoToResultUI {
-                onBodyText().verifyText("Welcome $username!")
-            }
+        }.submitAndGoToResultUI {
+            onBodyText().verifyText("Welcome $username!")
         }
+
+        activityScenario.close()
+    }
+
+    @Test
+    fun errorLogin() {
+        val expectedError = "some error happened when logging with the mock"
+        everyLoginReturns {
+            respond(
+                expectedError,
+                HttpStatusCode.BadRequest
+            )
+        }
+
+        val activityScenario = launchActivity<LoginActivity>()
+
+        LoginUI().apply {
+            enterInfo(username, password)
+        }.submitAndGoToResultUI {
+            onBodyText().verifyText(expectedError)
+        }
+
+        activityScenario.close()
     }
 
     private fun everyLoginReturns(response: MockRequestHandler) {

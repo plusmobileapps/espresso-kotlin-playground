@@ -101,9 +101,9 @@ class LoginActivity : AppCompatActivity() {
         binding.loggedInGreeting?.text = welcome
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
+    private fun showLoginFailed(errorString: String) {
         binding.loggedOutGroup?.isVisible = false
-        binding.loggedInGreeting?.text = getString(errorString)
+        binding.loggedInGreeting?.text = errorString
     }
 }
 

@@ -4,6 +4,11 @@ import androidx.test.espresso.ViewInteraction
 import com.plusmobileapps.kotlinopenespresso.R
 import com.plusmobileapps.kotlinopenespresso.extension.*
 
+fun onLogin(block: ScopedUI<LoginUI>): LoginUI = LoginUI().apply {
+    assertScreen()
+    block()
+}
+
 class LoginUI : BaseUI {
 
     override fun assertScreen() {
