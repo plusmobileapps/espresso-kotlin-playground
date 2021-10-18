@@ -9,8 +9,10 @@ theme:
 plugins:
   - search
 
-extra:
-  disqus: plusmobileapps
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
 
 nav: 
   - Welcome: index.md
