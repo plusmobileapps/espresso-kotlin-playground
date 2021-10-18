@@ -1,0 +1,21 @@
+site_name: Espresso Kotlin Playground
+repo_url: https://github.com/plusmobileapps/espresso-kotlin-playground
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+
+plugins:
+  - search
+
+extra:
+  disqus: plusmobileapps
+
+nav: 
+  - Welcome: index.md
+  - Page Object Pattern: page-object-pattern.md
+  - Espresso Extensions: espresso-extensions.md
+  - Navigation DSL: navigation-dsl.md
+  - Mockk Test: mockk-test.md
+  - Mock Ktor Test: mock-ktor-test.md
