@@ -1,10 +1,10 @@
-package com.plusmobileapps.kotlinopenespresso.pageobjects
+package com.plusmobileapps.kotlinopenespresso.pages
 
 import androidx.test.espresso.ViewInteraction
 import com.plusmobileapps.kotlinopenespresso.R
 import com.plusmobileapps.kotlinopenespresso.extension.verifyVisible
 
-class ResultUI : BaseUI {
+class LoggedInPage : BasePage {
 
     override fun assertScreen() {
         onBodyText().verifyVisible()
