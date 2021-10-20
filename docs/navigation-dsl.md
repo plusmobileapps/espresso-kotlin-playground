@@ -28,3 +28,12 @@ inline fun <reified T : BaseUI> onUI(block: ScopedUI<T> = {}): T =
         block()
     }
 ```
+
+```kotlin
+class LoginUI : BaseUI {
+
+    fun submitAndGoToResultUI(block: ScopedUI<ResultUI>): ResultUI =
+        navigateToWithClick(onSignInOrRegisterButton(), block)
+        
+}
+```

@@ -8,16 +8,16 @@ class TestCountingIdlingResource @Inject constructor(): CountingIdlingResource {
         const val KEY = "CountingIdlingResource"
     }
 
-    val idlingResource = androidx.test.espresso.idling.CountingIdlingResource(KEY)
+    val instance = androidx.test.espresso.idling.CountingIdlingResource(KEY)
 
-    override val isIdleNow: Boolean get() = idlingResource.isIdleNow
+    override val isIdleNow: Boolean get() = instance.isIdleNow
 
     override fun increment() {
-        idlingResource.increment()
+        instance.increment()
     }
 
     override fun decrement() {
-        idlingResource.decrement()
+        instance.decrement()
     }
 
 }

@@ -1,10 +1,10 @@
-package com.plusmobileapps.kotlinopenespresso.pageobjects
+package com.plusmobileapps.kotlinopenespresso.pages
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.matcher.ViewMatchers.withId
 
-interface BaseUI {
+interface BasePage {
 
     fun assertScreen()
 
