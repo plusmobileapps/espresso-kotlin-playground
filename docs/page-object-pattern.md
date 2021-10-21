@@ -11,20 +11,20 @@ Looking at the following UI, what might be some objects on the Login page object
     * password
     * sign in or register button
 
-## BaseUI 
+## BasePage
 
 ```kotlin
-interface BaseUI {
+interface BasePage {
 
     fun assertScreen()
 
 }
 ```
 
-## LoginUI
+## LoginPage
 
 ```kotlin
-class LoginUI : BaseUI {
+class LoginPage : BasePage {
 
     override fun assertScreen() = TODO()
 
