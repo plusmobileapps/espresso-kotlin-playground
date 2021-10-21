@@ -107,8 +107,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showLoginFailed(errorString: String) {
-        binding.loggedOutGroup?.isVisible = false
-        binding.loggedInGreeting?.text = errorString
+        binding.errorMessage?.text = errorString
+        binding.errorMessage?.isVisible = true
     }
 }
 

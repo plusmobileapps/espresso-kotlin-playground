@@ -34,7 +34,7 @@ class MockkLoginTest {
 
         val scenario = launchActivity<LoginActivity>()
 
-        startOnPage<LoginPage>() {
+        startOnPage<LoginPage> {
             enterInfo(username = username, password = password)
         }.submitAndGoToLoggedInPage {
             onBodyText().verifyText("Welcome $username!")
@@ -50,10 +50,10 @@ class MockkLoginTest {
 
         val scenario = launchActivity<LoginActivity>()
 
-        startOnPage<LoginPage>() {
+        startOnPage<LoginPage> {
             enterInfo(username = username, password = password)
-        }.submitAndGoToLoggedInPage {
-            onBodyText().verifyText(expectedError)
+            onSignInOrRegisterButton().click()
+            onErrorMessage().verifyText(expectedError).verifyVisible()
         }
 
         scenario.close()
@@ -62,7 +62,7 @@ class MockkLoginTest {
     @Test
     fun tooShortOfPasswordError() {
         val scenario = launchActivity<LoginActivity>()
-        startOnPage<LoginPage>() {
+        startOnPage<LoginPage> {
             onUsername().typeText("1")
             onPassword().typeText("4")
             onUsername().typeText("2")

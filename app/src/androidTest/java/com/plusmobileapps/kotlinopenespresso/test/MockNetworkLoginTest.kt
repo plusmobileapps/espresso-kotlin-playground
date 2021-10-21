@@ -4,9 +4,7 @@ import androidx.test.espresso.IdlingRegistry
 import com.plusmobileapps.kotlinopenespresso.data.model.LoginResponse
 import com.plusmobileapps.kotlinopenespresso.di.EspressoModule
 import com.plusmobileapps.kotlinopenespresso.di.NetworkModule
-import com.plusmobileapps.kotlinopenespresso.extension.launchActivity
-import com.plusmobileapps.kotlinopenespresso.extension.startOnPage
-import com.plusmobileapps.kotlinopenespresso.extension.verifyText
+import com.plusmobileapps.kotlinopenespresso.extension.*
 import com.plusmobileapps.kotlinopenespresso.pages.LoginPage
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
 import com.plusmobileapps.kotlinopenespresso.util.CountingIdlingResource
@@ -71,7 +69,7 @@ class MockNetworkLoginTest {
 
         val activityScenario = launchActivity<LoginActivity>()
 
-        startOnPage<LoginPage>() {
+        startOnPage<LoginPage> {
             enterInfo(username, password)
         }.submitAndGoToLoggedInPage {
             onBodyText().verifyText("Welcome $username!")
@@ -92,10 +90,10 @@ class MockNetworkLoginTest {
 
         val activityScenario = launchActivity<LoginActivity>()
 
-        startOnPage<LoginPage>() {
+        startOnPage<LoginPage> {
             enterInfo(username, password)
-        }.submitAndGoToLoggedInPage {
-            onBodyText().verifyText(expectedError)
+            onSignInOrRegisterButton().click()
+            onErrorMessage().verifyText(expectedError).verifyVisible()
         }
 
         activityScenario.close()

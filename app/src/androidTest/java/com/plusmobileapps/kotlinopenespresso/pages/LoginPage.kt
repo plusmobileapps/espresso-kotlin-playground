@@ -15,6 +15,7 @@ class LoginPage : BasePage {
     fun onUsername(): ViewInteraction = R.id.username.toViewInteraction()
     fun onPassword(): ViewInteraction = R.id.password.toViewInteraction()
     fun onSignInOrRegisterButton(): ViewInteraction = R.id.login.toViewInteraction()
+    fun onErrorMessage(): ViewInteraction = R.id.error_message.toViewInteraction()
 
     fun enterInfo(username: String, password: String) {
         onUsername().typeText(username)
