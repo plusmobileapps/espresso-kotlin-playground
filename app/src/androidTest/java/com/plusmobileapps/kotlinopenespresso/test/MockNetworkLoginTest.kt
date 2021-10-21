@@ -4,10 +4,8 @@ import androidx.test.espresso.IdlingRegistry
 import com.plusmobileapps.kotlinopenespresso.data.model.LoginResponse
 import com.plusmobileapps.kotlinopenespresso.di.EspressoModule
 import com.plusmobileapps.kotlinopenespresso.di.NetworkModule
-import com.plusmobileapps.kotlinopenespresso.extension.launchActivity
-import com.plusmobileapps.kotlinopenespresso.extension.onUI
-import com.plusmobileapps.kotlinopenespresso.extension.verifyText
-import com.plusmobileapps.kotlinopenespresso.pageobjects.LoginUI
+import com.plusmobileapps.kotlinopenespresso.extension.*
+import com.plusmobileapps.kotlinopenespresso.pages.LoginPage
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
 import com.plusmobileapps.kotlinopenespresso.util.CountingIdlingResource
 import com.plusmobileapps.kotlinopenespresso.util.MockNetworkTestHelper
@@ -33,7 +31,7 @@ class MockNetworkLoginTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
-    val _idlingResource = TestCountingIdlingResource()
+    private val _idlingResource = TestCountingIdlingResource()
 
     private val networkHelper = MockNetworkTestHelper()
 
@@ -50,12 +48,12 @@ class MockNetworkLoginTest {
 
     @Before
     fun setUp() {
-        IdlingRegistry.getInstance().register(_idlingResource.idlingResource)
+        IdlingRegistry.getInstance().register(_idlingResource.instance)
     }
 
     @After
     fun tearDown() {
-        IdlingRegistry.getInstance().unregister(_idlingResource.idlingResource)
+        IdlingRegistry.getInstance().unregister(_idlingResource.instance)
         networkHelper.destroy()
     }
 
@@ -71,9 +69,9 @@ class MockNetworkLoginTest {
 
         val activityScenario = launchActivity<LoginActivity>()
 
-        onUI<LoginUI>() {
+        startOnPage<LoginPage> {
             enterInfo(username, password)
-        }.submitAndGoToResultUI {
+        }.submitAndGoToLoggedInPage {
             onBodyText().verifyText("Welcome $username!")
         }
 
@@ -92,10 +90,10 @@ class MockNetworkLoginTest {
 
         val activityScenario = launchActivity<LoginActivity>()
 
-        onUI<LoginUI>() {
+        startOnPage<LoginPage> {
             enterInfo(username, password)
-        }.submitAndGoToResultUI {
-            onBodyText().verifyText(expectedError)
+            onSignInOrRegisterButton().click()
+            onErrorMessage().verifyText(expectedError).verifyVisible()
         }
 
         activityScenario.close()

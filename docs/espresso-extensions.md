@@ -18,3 +18,32 @@ fun ViewInteraction.verifyError(@StringRes resId: Int): ViewInteraction =
 fun getString(@StringRes resId: Int): String =
     InstrumentationRegistry.getInstrumentation().targetContext.getString(resId)
 ```
+
+```kotlin
+interface BaseUI {
+
+    fun Int.toViewInteraction(): ViewInteraction = onView(withId(this))
+
+}
+```
+
+```kotlin
+class LoginUI : BaseUI {
+
+    override fun assertScreen() {
+        onUsername().verifyVisible()
+        onPassword().verifyVisible()
+        onSignInOrRegisterButton().verifyVisible()
+    }
+
+    fun onUsername(): ViewInteraction = R.id.username.toViewInteraction()
+    fun onPassword(): ViewInteraction = R.id.password.toViewInteraction()
+    fun onSignInOrRegisterButton(): ViewInteraction = R.id.login.toViewInteraction()
+
+    fun enterInfo(username: String, password: String) {
+        onUsername().typeText(username)
+        onPassword().typeText(password)
+    }
+
+}
+```

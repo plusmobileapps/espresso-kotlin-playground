@@ -1,6 +1,7 @@
 package com.plusmobileapps.kotlinopenespresso.ui.login
 
 import android.app.Activity
+import android.content.Context
 import androidx.lifecycle.Observer
 import android.os.Bundle
 import androidx.annotation.StringRes
@@ -9,6 +10,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -96,14 +98,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
+        val view = currentFocus
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
         val welcome = getString(R.string.welcome, model.displayName)
         binding.loggedOutGroup?.isVisible = false
         binding.loggedInGreeting?.text = welcome
     }
 
     private fun showLoginFailed(errorString: String) {
-        binding.loggedOutGroup?.isVisible = false
-        binding.loggedInGreeting?.text = errorString
+        binding.errorMessage?.text = errorString
+        binding.errorMessage?.isVisible = true
     }
 }
 
