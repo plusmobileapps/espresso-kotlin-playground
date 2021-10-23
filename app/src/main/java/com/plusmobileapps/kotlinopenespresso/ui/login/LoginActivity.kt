@@ -103,6 +103,7 @@ class LoginActivity : AppCompatActivity() {
         inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
         val welcome = getString(R.string.welcome, model.displayName)
         binding.loggedOutGroup?.isVisible = false
+        binding.loggedInGroup?.isVisible = true
         binding.loggedInGreeting?.text = welcome
     }
 

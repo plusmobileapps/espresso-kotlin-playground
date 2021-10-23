@@ -13,4 +13,7 @@ class LoggedInPage : BasePage {
     }
 
     fun onBodyText(): ViewInteraction = R.id.logged_in_greeting.toViewInteraction()
+
+    fun onProfileImage(): ViewInteraction = R.id.user_profile_image.toViewInteraction()
+
 }

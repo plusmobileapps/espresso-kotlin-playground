@@ -7,18 +7,18 @@ import com.plusmobileapps.kotlinopenespresso.extension.*
 class LoginPage : BasePage {
 
     override fun assertScreen() {
-        onUsername().verifyVisible()
+        onEmail().verifyVisible()
         onPassword().verifyVisible()
         onSignInOrRegisterButton().verifyVisible()
     }
 
-    fun onUsername(): ViewInteraction = R.id.username.toViewInteraction()
+    fun onEmail(): ViewInteraction = R.id.username.toViewInteraction()
     fun onPassword(): ViewInteraction = R.id.password.toViewInteraction()
     fun onSignInOrRegisterButton(): ViewInteraction = R.id.login.toViewInteraction()
     fun onErrorMessage(): ViewInteraction = R.id.error_message.toViewInteraction()
 
     fun enterInfo(username: String, password: String) {
-        onUsername().typeText(username)
+        onEmail().typeText(username)
         onPassword().typeText(password)
     }
 
