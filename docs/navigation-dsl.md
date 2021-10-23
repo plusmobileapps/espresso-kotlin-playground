@@ -1,5 +1,6 @@
 # Navigation DSL 
 
+
 ```kotlin
 /**
  * Generic lambda with a receiver for navigation functions that are providing a scoped block

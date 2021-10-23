@@ -1,5 +1,6 @@
 package com.plusmobileapps.kotlinopenespresso.test
 
+import androidx.test.core.app.launchActivity
 import com.plusmobileapps.kotlinopenespresso.R
 import com.plusmobileapps.kotlinopenespresso.data.LoginDataSource
 import com.plusmobileapps.kotlinopenespresso.data.Result
@@ -63,10 +64,10 @@ class MockkLoginTest {
     fun tooShortOfPasswordError() {
         val scenario = launchActivity<LoginActivity>()
         startOnPage<LoginPage> {
-            onUsername().typeText("1")
+            onEmail().typeText("1")
             onPassword().typeText("4")
-            onUsername().typeText("2")
-            onPassword().verifyError(R.string.invalid_password)
+            onEmail().typeText("2")
+            onPassword().verifyTextFieldError(R.string.invalid_password)
         }
         scenario.close()
     }

@@ -1,5 +1,6 @@
 package com.plusmobileapps.kotlinopenespresso.test
 
+import androidx.test.core.app.launchActivity
 import androidx.test.espresso.IdlingRegistry
 import com.plusmobileapps.kotlinopenespresso.data.model.LoginResponse
 import com.plusmobileapps.kotlinopenespresso.di.EspressoModule
