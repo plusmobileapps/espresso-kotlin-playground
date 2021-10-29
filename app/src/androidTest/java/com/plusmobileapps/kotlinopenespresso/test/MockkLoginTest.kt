@@ -37,7 +37,7 @@ class MockkLoginTest {
 
         startOnPage<LoginPage> {
             enterInfo(username = username, password = password)
-        }.submitAndGoToLoggedInPage {
+        }.goToLoggedInPage {
             onBodyText().verifyText("Welcome $username!")
         }
 
