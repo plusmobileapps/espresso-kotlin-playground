@@ -100,6 +100,20 @@ Sample:
 LoggedInPage().onWelcomeGreeting().verifyText("Welcome Andrew!")
 ```
 
+## androidx.test:core-ktx
+
+```groovy
+androidTestImplementation "androidx.test:core-ktx:<version>"
+```
+
+[Versions](https://mvnrepository.com/artifact/androidx.test/core-ktx)
+
+Sample: 
+
+```kotlin
+val scenario = launchActivity<LoginActivity>()
+```
+
 ## Simple Test
 
 Now that all of the page objects are implemented, the last login test can be simplified further using the new extension functions. 
@@ -107,7 +121,7 @@ Now that all of the page objects are implemented, the last login test can be sim
 ```kotlin
 @Test 
 fun successfulLogin() {
-    val scenario = ActivityScenario.launch(LoginActivity::class.java)
+    val scenario = launchActivity<LoginActivity>()
 
     LoginPage().apply {
         onEmail().typeText("andrew@test.com")
