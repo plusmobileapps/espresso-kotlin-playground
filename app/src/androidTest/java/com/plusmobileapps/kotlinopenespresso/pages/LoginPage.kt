@@ -22,6 +22,6 @@ class LoginPage : BasePage {
         onPassword().typeText(password)
     }
 
-    fun submitAndGoToLoggedInPage(block: PageScope<LoggedInPage>): LoggedInPage =
+    fun goToLoggedInPage(block: PageScope<LoggedInPage> = {}): LoggedInPage =
         navigateToPageWithClick(onSignInOrRegisterButton(), block)
 }

@@ -72,7 +72,7 @@ class MockNetworkLoginTest {
 
         startOnPage<LoginPage> {
             enterInfo(username, password)
-        }.submitAndGoToLoggedInPage {
+        }.goToLoggedInPage {
             onBodyText().verifyText("Welcome $username!")
         }
 
