@@ -1,10 +1,12 @@
 package com.plusmobileapps.kotlinopenespresso.test
 
-import androidx.test.core.app.ActivityScenario
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.core.app.launchActivity
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.plusmobileapps.kotlinopenespresso.R
+import com.plusmobileapps.kotlinopenespresso.extensions.click
+import com.plusmobileapps.kotlinopenespresso.extensions.typeText
+import com.plusmobileapps.kotlinopenespresso.extensions.verifyText
+import com.plusmobileapps.kotlinopenespresso.extensions.verifyTextFieldError
 import com.plusmobileapps.kotlinopenespresso.page.LoggedInPage
 import com.plusmobileapps.kotlinopenespresso.page.LoginPage
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
@@ -15,16 +17,33 @@ import org.junit.runner.RunWith
 class LoginTest {
     @Test
     fun successfulLogin() {
-        val scenario = ActivityScenario.launch(LoginActivity::class.java)
+        val scenario = launchActivity<LoginActivity>()
 
         LoginPage().apply {
-            onEmail().perform(ViewActions.typeText("andrew@test.com"))
-            onPassword().perform(ViewActions.typeText("password123"))
-            onSignInOrRegisterButton().perform(ViewActions.click())
+            assertScreen()
+            onEmail().typeText("andrew@test.com")
+            onPassword().typeText("password123")
+            onSignInOrRegisterButton().click()
         }
 
-        LoggedInPage().onWelcomeGreeting().check(matches(withText("Welcome Andrew!")))
+        LoggedInPage().apply {
+            assertScreen()
+            onWelcomeGreeting().verifyText("Welcome Andrew!")
+        }
 
+        scenario.close()
+    }
+
+    @Test
+    fun tooShortOfPasswordError() {
+        val scenario = launchActivity<LoginActivity>()
+
+        LoginPage().apply {
+            onEmail().typeText("1")
+            onPassword().typeText("4")
+            onEmail().typeText("2")
+            onPassword().verifyTextFieldError(R.string.invalid_password)
+        }
         scenario.close()
     }
 }

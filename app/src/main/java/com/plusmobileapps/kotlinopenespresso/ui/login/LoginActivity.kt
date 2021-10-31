@@ -12,6 +12,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.plusmobileapps.kotlinopenespresso.databinding.ActivityLoginBinding
 
 import com.plusmobileapps.kotlinopenespresso.R
@@ -53,16 +54,12 @@ class LoginActivity : AppCompatActivity() {
             val loginResult = it ?: return@Observer
 
             loading.visibility = View.GONE
-            if (loginResult.error != null) {
-                showLoginFailed(loginResult.error)
+            if (loginResult.errorString != null) {
+                showLoginFailed(loginResult.errorString)
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
             }
-            setResult(Activity.RESULT_OK)
-
-            //Complete and destroy login activity once successful
-            finish()
         })
 
         username.afterTextChanged {
@@ -99,19 +96,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
-        Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
-            Toast.LENGTH_LONG
-        ).show()
+        val welcome = getString(R.string.welcome, model.displayName)
+        binding.loggedOutGroup?.isVisible = false
+        binding.loggedInGroup?.isVisible = true
+        binding.loggedInGreeting?.text = welcome
     }
 
-    private fun showLoginFailed(@StringRes errorString: Int) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+    private fun showLoginFailed(errorString: String) {
+        binding.errorMessage?.text = errorString
+        binding.errorMessage?.isVisible = true
     }
+
 }
 
 /**
