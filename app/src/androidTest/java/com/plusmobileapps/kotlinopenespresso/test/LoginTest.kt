@@ -44,6 +44,7 @@ class LoginTest {
             onEmail().typeText("2")
             onPassword().verifyTextFieldError(R.string.invalid_password)
         }
+
         scenario.close()
     }
 }
