@@ -1,21 +1,19 @@
 package com.plusmobileapps.kotlinopenespresso.ui.login
 
-import android.app.Activity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.plusmobileapps.kotlinopenespresso.databinding.ActivityLoginBinding
-
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.plusmobileapps.kotlinopenespresso.R
+import com.plusmobileapps.kotlinopenespresso.databinding.ActivityLoginBinding
+import com.plusmobileapps.kotlinopenespresso.ui.settings.SettingsActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,6 +33,10 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
+
+        binding.settingsButton.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
