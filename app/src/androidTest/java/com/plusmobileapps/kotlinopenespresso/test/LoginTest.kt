@@ -1,6 +1,8 @@
 package com.plusmobileapps.kotlinopenespresso.test
 
 import androidx.test.core.app.launchActivity
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.plusmobileapps.kotlinopenespresso.R
 import com.plusmobileapps.kotlinopenespresso.extensions.click
