@@ -15,3 +15,7 @@ If you are writing an Android app that has a minimum SDK less than Android P and
     However, they are not so lightweight. If you would like to save even a little testing time of your Kotlin app, you can introduce [the all-open compiler plugin](https://kotlinlang.org/docs/reference/compiler-plugins.html#all-open-compiler-plugin) instead of DexOpener.
 
 So to keep the mock tests as performant as possible we will use the [Kotlin all open compiler](https://kotlinlang.org/docs/all-open-plugin.html) which will only open up classes marked with an annotation on debug builds. 
+
+## Source
+
+[github commit](https://github.com/plusmobileapps/espresso-kotlin-playground/commit/959b7b62136a498d35b3c72ec0206da93794a931)

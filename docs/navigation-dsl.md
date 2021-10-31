@@ -114,7 +114,8 @@ It may be possible that a test will need to navigate to a screen but not interac
 ```kotlin
 class LoggedInPage : BasePage {
 
-    fun goToSettings(block: PageScope<Settings> = {}): SettingsPage = navigateToWithClick(onSettings(), block)
+    fun goToSettings(block: PageScope<Settings> = {}): SettingsPage = 
+        navigateToWithClick(onSettings(), block)
 
 }
 ```
