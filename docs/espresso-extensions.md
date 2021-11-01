@@ -10,9 +10,10 @@ One of the most common ways to create a [`ViewInteraction`](https://developer.an
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.matcher.ViewMatchers.withId
 
-interface BaseUI {
+interface BasePage {
 
-    fun Int.toViewInteraction(): ViewInteraction = onView(withId(this))
+    fun Int.toViewInteraction(): ViewInteraction = 
+        onView(withId(this))
 
 }
 ```
@@ -134,3 +135,9 @@ fun successfulLogin() {
 ```
 
 The test is starting to look better, however each page has to be instantiated and there is no link between pages when writing tests. Thankfully Kotlin has features that will be covered in the next section to create a navigation DSL. 
+
+## Resources
+
+* Source code
+    * [Github commit](https://github.com/plusmobileapps/espresso-kotlin-playground/commit/51aaf7fa633369000d8735a5255ccbed4e423f7b)
+    * [`3-espresso-extensions` - GitHub Branch](https://github.com/plusmobileapps/espresso-kotlin-playground/tree/3-espresso-extensions)

@@ -22,5 +22,11 @@ The series of topics was intended to be read sequentially to continuously build 
 I hope you learn something from this series and please leave any comments about the series on my website. If there's any suggestions to improve anything, feel free to [open up a issue](https://github.com/plusmobileapps/espresso-kotlin-playground/issues/new) on the project. Otherwise, enjoy! 
 
 !!! info
-    If you are trying to follow along with your own code, download [Android Studio](https://developer.android.com/studio/preview) Bumblebee and create a new project with the Login Activity template. This will provide a basic template to build off for the duration of the project. 
-    ![](img/login-activity-template.png)
+    If you would like to follow along by coding, checkout the project and switch to [1-start](https://github.com/plusmobileapps/espresso-kotlin-playground/tree/1-start) branch. The project starts off from the Login Activity template in the setup wizard. 
+
+    ```bash
+    git clone https://github.com/plusmobileapps/espresso-kotlin-playground.git
+    git checkout 1-start
+    ```
+
+

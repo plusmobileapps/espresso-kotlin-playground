@@ -142,3 +142,9 @@ Putting everything together, the basic of the structure of the navigation DSL wo
 * Each navigation function also returns the page being navigated to in order to chain navigation methods after scoped lambdas
 * View interactions and assertions occur inside of each scoped lambda with the page as its receiver
 * Any `PageScope` function parameter should provide a default empty lambda so navigation can be asserted, but not require interaction with a screen. 
+
+## References
+
+* Source code
+    * [Github commit](https://github.com/plusmobileapps/espresso-kotlin-playground/commit/a6bd7640b7a00eb0e90a3eb9885f918f59936ec6)
+    * [`4-navigation-dsl` - GitHub branch](https://github.com/plusmobileapps/espresso-kotlin-playground/tree/4-navigation-dsl)

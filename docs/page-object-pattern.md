@@ -4,7 +4,7 @@ The page object pattern is a very popular design pattern when writing automation
 
 ## What is a page object
 
-A page object is a object oriented class that is an abstraction over the user interface for an automation test. 
+A page object is an object oriented class that is an abstraction over the user interface for an automation test. 
 
 ## How to make a page object
 
@@ -66,7 +66,7 @@ class LoggedInPage : BasePage {
 
     override fun assertScreen() = TODO()
 
-    fun onBodyText(): ViewInteraction = TODO()
+    fun onWelcomeGreeting(): ViewInteraction = TODO()
     fun onProfileImage(): ViewInteraction = TODO()
     
 }
@@ -93,3 +93,9 @@ fun successfulLogin() {
 ```
 
 As you probably have noticed, none of the functions in the page object have been implemented and the test above is a little verbose. Move onto the next section to learn about some helpful extension functions that simplify implementing the rest of the page object and make the test more expressive. 
+
+## Resources
+
+* Source code
+    * [Github Commit](https://github.com/plusmobileapps/espresso-kotlin-playground/commit/241fa65658864c45cfbce8757de21ab7eb0f3c09)
+    * [`2-page-objects` - GitHub branch](https://github.com/plusmobileapps/espresso-kotlin-playground/tree/2-page-objects)

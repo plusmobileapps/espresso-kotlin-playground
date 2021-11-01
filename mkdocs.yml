@@ -21,3 +21,4 @@ nav:
   - Navigation DSL: navigation-dsl.md
   - Mockk Test: mockk-test.md
   - Mock Ktor Test: mock-ktor-test.md
+  - Integrate With API: integrate-with-api.md
