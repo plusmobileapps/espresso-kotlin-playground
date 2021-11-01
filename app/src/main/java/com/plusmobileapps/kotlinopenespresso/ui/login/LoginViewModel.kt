@@ -8,8 +8,11 @@ import com.plusmobileapps.kotlinopenespresso.data.LoginRepository
 import com.plusmobileapps.kotlinopenespresso.data.Result
 
 import com.plusmobileapps.kotlinopenespresso.R
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm

@@ -1,7 +1,6 @@
 package com.plusmobileapps.kotlinopenespresso.test
 
 import androidx.test.core.app.launchActivity
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.plusmobileapps.kotlinopenespresso.R
 import com.plusmobileapps.kotlinopenespresso.extensions.startOnPage
 import com.plusmobileapps.kotlinopenespresso.extensions.typeText
@@ -9,11 +8,17 @@ import com.plusmobileapps.kotlinopenespresso.extensions.verifyText
 import com.plusmobileapps.kotlinopenespresso.extensions.verifyTextFieldError
 import com.plusmobileapps.kotlinopenespresso.page.LoginPage
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class LoginTest {
+
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
     @Test
     fun successfulLogin() {
         val scenario = launchActivity<LoginActivity>()
