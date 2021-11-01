@@ -11,6 +11,7 @@ import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Rule
@@ -75,6 +76,6 @@ class MockkLoginTest {
     }
 
     private fun everyLoginReturns(result: () -> Result<LoggedInUser>) {
-        every { loginDataSource.login(email, password) } returns result()
+        coEvery { loginDataSource.login(email, password) } returns result()
     }
 }
