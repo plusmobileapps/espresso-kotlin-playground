@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
+import androidx.lifecycle.viewModelScope
 import com.plusmobileapps.kotlinopenespresso.data.LoginRepository
 import com.plusmobileapps.kotlinopenespresso.data.Result
 
 import com.plusmobileapps.kotlinopenespresso.R
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,15 +22,17 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-    fun login(username: String, password: String) {
-        // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password)
+    fun login(email: String, password: String) {
+        viewModelScope.launch {
+            // can be launched in a separate asynchronous job
+            val result = loginRepository.login(email, password)
 
-        if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else if (result is Result.Error) {
-            _loginResult.value = LoginResult(errorString = result.exception.message)
+            if (result is Result.Success) {
+                _loginResult.value =
+                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+            } else if (result is Result.Error) {
+                _loginResult.value = LoginResult(errorString = result.exception.message)
+            }
         }
     }
 
