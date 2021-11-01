@@ -9,7 +9,7 @@ import javax.inject.Inject
  */
 class LoginDataSource @Inject constructor() {
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
+    fun login(email: String, password: String): Result<LoggedInUser> {
         try {
             // TODO: handle loggedInUser authentication
             val fakeUser = LoggedInUser(java.util.UUID.randomUUID().toString(), "Andrew")

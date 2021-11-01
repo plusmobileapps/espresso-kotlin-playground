@@ -4,6 +4,7 @@ import androidx.test.espresso.ViewInteraction
 import com.plusmobileapps.kotlinopenespresso.R
 import com.plusmobileapps.kotlinopenespresso.extensions.PageScope
 import com.plusmobileapps.kotlinopenespresso.extensions.navigateToPageWithClick
+import com.plusmobileapps.kotlinopenespresso.extensions.typeText
 import com.plusmobileapps.kotlinopenespresso.extensions.verifyVisible
 
 class LoginPage : BasePage {
@@ -12,6 +13,11 @@ class LoginPage : BasePage {
         onEmail().verifyVisible()
         onPassword().verifyVisible()
         onSignInOrRegisterButton().verifyVisible()
+    }
+
+    fun enterInfo(email: String, password: String) {
+        onEmail().typeText(email)
+        onPassword().typeText(password)
     }
 
     fun onEmail(): ViewInteraction = R.id.username.toViewInteraction()
