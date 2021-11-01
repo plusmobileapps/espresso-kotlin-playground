@@ -9,12 +9,16 @@ import com.plusmobileapps.kotlinopenespresso.data.LoginRepository
 import com.plusmobileapps.kotlinopenespresso.data.Result
 
 import com.plusmobileapps.kotlinopenespresso.R
+import com.plusmobileapps.kotlinopenespresso.util.CountingIdlingResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel @Inject constructor(
+    private val loginRepository: LoginRepository,
+    private val idlingResource: CountingIdlingResource
+) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
@@ -23,16 +27,17 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
     val loginResult: LiveData<LoginResult> = _loginResult
 
     fun login(email: String, password: String) {
+        idlingResource.increment()
         viewModelScope.launch {
             // can be launched in a separate asynchronous job
             val result = loginRepository.login(email, password)
 
-            if (result is Result.Success) {
-                _loginResult.value =
-                    LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-            } else if (result is Result.Error) {
-                _loginResult.value = LoginResult(errorString = result.exception.message)
-            }
+            when (result) {
+                is Result.Error -> LoginResult(errorString = result.exception.message)
+                is Result.Success -> LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+            }.let { _loginResult.value = it }
+
+            idlingResource.decrement()
         }
     }
 
