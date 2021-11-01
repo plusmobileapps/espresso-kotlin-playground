@@ -1,5 +1,6 @@
 package com.plusmobileapps.kotlinopenespresso.data
 
+import com.plusmobileapps.kotlinopenespresso.OpenForTest
 import com.plusmobileapps.kotlinopenespresso.data.model.LoggedInUser
 import java.io.IOException
 import javax.inject.Inject
@@ -7,6 +8,7 @@ import javax.inject.Inject
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
+@OpenForTest
 class LoginDataSource @Inject constructor() {
 
     fun login(email: String, password: String): Result<LoggedInUser> {

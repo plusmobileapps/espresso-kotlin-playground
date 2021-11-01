@@ -3,6 +3,11 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'org.jetbrains.kotlin.plugin.allopen'
+}
+
+allOpen {
+    annotation("com.plusmobileapps.kotlinopenespresso.OpenForTest")
 }
 
 android {
