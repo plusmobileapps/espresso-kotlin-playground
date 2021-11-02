@@ -2,6 +2,35 @@
 
 ![](img/login-mock-network.png)
 
+## Counting Idling Resource 
+
+```kotlin
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val loginRepository: LoginRepository,
+    private val idlingResource: CountingIdlingResource
+) : ViewModel() {
+
+    fun login(email: String, password: String) {
+        idlingResource.increment()
+        viewModelScope.launch {
+            // delay is just for local development to ensure espresso waits for job to finish
+            delay(2_000)
+
+            // can be launched in a separate asynchronous job
+            val result = loginRepository.login(email, password)
+
+            when (result) {
+                is Result.Error -> LoginResult(errorString = result.exception.message)
+                is Result.Success -> LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+            }.let { _loginResult.value = it }
+
+            idlingResource.decrement()
+        }
+    }
+}
+```
+
 ## Resources 
 
 * [Add ktor, kotlinx.serialization, and mock network test commit](https://github.com/plusmobileapps/espresso-kotlin-playground/commit/00c08f724dc5b6f00cd72c1536a65ca3c0d45d0a)
