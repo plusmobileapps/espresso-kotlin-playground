@@ -8,3 +8,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Kotlin Open Espresso"
 include ':app'
+include ':backend'
+include ':model'

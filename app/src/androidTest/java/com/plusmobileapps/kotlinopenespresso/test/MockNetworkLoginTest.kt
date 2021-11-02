@@ -2,7 +2,7 @@ package com.plusmobileapps.kotlinopenespresso.test
 
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.IdlingRegistry
-import com.plusmobileapps.kotlinopenespresso.data.model.LoginResponse
+import com.plusmobileapps.model.LoginResponse
 import com.plusmobileapps.kotlinopenespresso.di.EspressoModule
 import com.plusmobileapps.kotlinopenespresso.di.NetworkModule
 import com.plusmobileapps.kotlinopenespresso.extensions.click

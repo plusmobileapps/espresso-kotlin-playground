@@ -1,4 +1,4 @@
-package com.plusmobileapps.kotlinopenespresso.data.model
+package com.plusmobileapps.model
 
 import kotlinx.serialization.Serializable
 

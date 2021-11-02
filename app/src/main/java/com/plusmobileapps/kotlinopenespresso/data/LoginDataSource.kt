@@ -2,8 +2,8 @@ package com.plusmobileapps.kotlinopenespresso.data
 
 import com.plusmobileapps.kotlinopenespresso.OpenForTest
 import com.plusmobileapps.kotlinopenespresso.data.model.LoggedInUser
-import com.plusmobileapps.kotlinopenespresso.data.model.LoginRequest
-import com.plusmobileapps.kotlinopenespresso.data.model.LoginResponse
+import com.plusmobileapps.model.LoginRequest
+import com.plusmobileapps.model.LoginResponse
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
@@ -22,14 +22,15 @@ import javax.inject.Inject
 class LoginDataSource @Inject constructor(private val httpClient: HttpClient) {
 
     companion object {
-        const val LOGIN_URL = "https://plusmobileapps.com/login"
+//        const val LOGIN_URL = "https://plusmobileapps.com/login"
+        const val LOGIN_URL = "http://10.0.2.2:8080/login"
     }
 
     suspend fun login(email: String, password: String): Result<LoggedInUser> = withContext(Dispatchers.IO) {
         try {
             val response = httpClient.post<LoginResponse>(LOGIN_URL) {
                 contentType(ContentType.Application.Json)
-                body = Json.encodeToString(LoginRequest.serializer(), LoginRequest(email, password))
+                body = LoginRequest(email, password)
             }
             val user = LoggedInUser(response.id, response.displayName)
             Result.Success(user)

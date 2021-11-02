@@ -1,7 +1,7 @@
 package com.plusmobileapps.kotlinopenespresso.util
 
 import com.plusmobileapps.kotlinopenespresso.data.LoginDataSource
-import com.plusmobileapps.kotlinopenespresso.data.model.LoginResponse
+import com.plusmobileapps.model.LoginResponse
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.features.json.*
@@ -40,7 +40,12 @@ class MockNetworkTestHelper {
     companion object {
         val defaultLoginResponseHandler: MockRequestHandler = {
             respond(
-                Json.encodeToString(LoginResponse("default-id", "Buzz Killington")),
+                Json.encodeToString(
+                    LoginResponse(
+                        "default-id",
+                        "Buzz Killington"
+                    )
+                ),
                 HttpStatusCode.OK,
                 headersOf("Content-Type", ContentType.Application.Json.toString())
             )
