@@ -1,6 +1,6 @@
 # Page Object Pattern
 
-The page object pattern is a very popular design pattern when writing automation tests for minimizing code duplication and test code that is easy to maintain. 
+The page object pattern is a very popular design pattern when writing automation tests helping minimize code duplication and test code that is easy to maintain. 
 
 ## What is a page object
 

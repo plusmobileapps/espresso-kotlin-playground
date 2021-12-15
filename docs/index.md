@@ -6,7 +6,7 @@ A mini series on the different strategies from playing around with [Espresso](ht
 
 ## How to read
 
-The series of topics was intended to be read sequentially to continuously build off the topics being covered. So if you came in at a random place and don't understand the subject, it might help to start from the beginning at the [page object pattern](https://plusmobileapps.com/espresso-kotlin-playground/page-object-pattern).
+The series of topics was intended to be read sequentially to continuously build off the topics being covered. So if you came in at a random place and don't understand what's going on, it might help to start from the beginning from the [page object pattern](https://plusmobileapps.com/espresso-kotlin-playground/page-object-pattern).
 
 ## What you will learn 
 

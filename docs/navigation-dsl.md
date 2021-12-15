@@ -143,6 +143,8 @@ Putting everything together, the basic of the structure of the navigation DSL wo
 * View interactions and assertions occur inside of each scoped lambda with the page as its receiver
 * Any `PageScope` function parameter should provide a default empty lambda so navigation can be asserted, but not require interaction with a screen. 
 
+The test is starting to look a lot cleaner utilizing the page object pattern, extension functions, and creating a navigation DSL. However the production code is hard coded to get the test to pass and in the next couple sections we will learn about a couple different approaches in making mock tests with more dynamic production looking code.  
+
 ## References
 
 * Source code
