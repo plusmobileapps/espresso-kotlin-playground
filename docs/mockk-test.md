@@ -56,7 +56,11 @@ fun errorLogin() {
 }
 ```
 
-This is pretty much the basis for writing a mock test with Mockk. So if you were to update the successful login test, how would you rewrite the other login test to return something dynamic? 
+This is pretty much the basis for writing an Espresso mock test with Mockk. So if you were to update the successful login test, how would you rewrite the other login test to return something dynamic? 
+
+1. enter info on the login page and submit
+2. verify the welcome greeting display name
+3. verify navigation to the settings
 
 ??? answer
     ```kotlin
@@ -72,7 +76,6 @@ This is pretty much the basis for writing a mock test with Mockk. So if you were
         }.goToSettings()
 
         scenario.close()
-
     }
     ```
 
