@@ -9,6 +9,10 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.res.stringResource
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.plusmobileapps.kotlinopenespresso.R
@@ -30,18 +34,25 @@ class LoginActivity : AppCompatActivity() {
 
         val username = binding.username
         val password = binding.password
-        val login = binding.login
+        val loginButton = binding.loginButton
         val loading = binding.loading
 
         binding.settingsButton.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
+        loginButton.setContent {
+            val state = loginViewModel.loginFormState.observeAsState()
+            Button(onClick = {
+                loading.visibility = View.VISIBLE
+                loginViewModel.login(username.text.toString(), password.text.toString())
+            }, enabled = state.value?.isDataValid ?: false) {
+                Text(text = stringResource(id = R.string.action_sign_in))
+            }
+        }
+
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
-
-            // disable login button unless both username / password is valid
-            login.isEnabled = loginState.isDataValid
 
             if (loginState.usernameError != null) {
                 username.error = getString(loginState.usernameError)
@@ -87,11 +98,6 @@ class LoginActivity : AppCompatActivity() {
                         )
                 }
                 false
-            }
-
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
             }
         }
     }

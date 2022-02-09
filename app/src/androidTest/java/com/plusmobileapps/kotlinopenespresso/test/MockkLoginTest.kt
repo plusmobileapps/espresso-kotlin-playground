@@ -1,5 +1,7 @@
 package com.plusmobileapps.kotlinopenespresso.test
 
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.performClick
 import androidx.test.core.app.launchActivity
 import com.plusmobileapps.kotlinopenespresso.R
 import com.plusmobileapps.kotlinopenespresso.data.LoginDataSource
@@ -12,7 +14,6 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
 import org.junit.Rule
 import org.junit.Test
@@ -22,6 +23,9 @@ class MockkLoginTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule
+    val composeTestRule = createAndroidComposeRule<LoginActivity>()
 
     @BindValue
     @JvmField
@@ -36,7 +40,7 @@ class MockkLoginTest {
         everyLoginReturns { Result.Success(LoggedInUser("some-user-id", displayName)) }
         val scenario = launchActivity<LoginActivity>()
 
-        startOnPage<LoginPage> {
+        composeTestRule.startOnPage<LoginPage> {
             enterInfo(email, password)
         }.goToLoggedInPage {
             onWelcomeGreeting().verifyText("Welcome $displayName!")
@@ -52,9 +56,9 @@ class MockkLoginTest {
         everyLoginReturns { Result.Error(IllegalArgumentException(expectedError)) }
         val scenario = launchActivity<LoginActivity>()
 
-        startOnPage<LoginPage> {
+        composeTestRule.startOnPage<LoginPage> {
             enterInfo(email, password);
-            onSignInOrRegisterButton().click()
+            onSignInOrRegisterButton().performClick()
             onErrorMessage().verifyText(expectedError).verifyVisible()
         }
 
@@ -65,7 +69,7 @@ class MockkLoginTest {
     fun tooShortOfPasswordError() {
         val scenario = launchActivity<LoginActivity>()
 
-        startOnPage<LoginPage> {
+        composeTestRule.startOnPage<LoginPage> {
             onEmail().typeText("1")
             onPassword().typeText("4")
             onEmail().typeText("2")

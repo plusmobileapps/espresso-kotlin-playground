@@ -1,11 +1,12 @@
 package com.plusmobileapps.kotlinopenespresso.test
 
+import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.performClick
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.IdlingRegistry
 import com.plusmobileapps.model.LoginResponse
 import com.plusmobileapps.kotlinopenespresso.di.EspressoModule
 import com.plusmobileapps.kotlinopenespresso.di.NetworkModule
-import com.plusmobileapps.kotlinopenespresso.extensions.click
 import com.plusmobileapps.kotlinopenespresso.extensions.startOnPage
 import com.plusmobileapps.kotlinopenespresso.extensions.verifyText
 import com.plusmobileapps.kotlinopenespresso.extensions.verifyVisible
@@ -34,6 +35,9 @@ class MockNetworkLoginTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule
+    val composeTestRule = createAndroidComposeRule<LoginActivity>()
 
     private val networkHelper = MockNetworkTestHelper()
     private val _idlingResource = TestCountingIdlingResource()
@@ -73,7 +77,7 @@ class MockNetworkLoginTest {
 
         val activityScenario = launchActivity<LoginActivity>()
 
-        startOnPage<LoginPage> {
+        composeTestRule.startOnPage<LoginPage> {
             enterInfo(username, password)
         }.goToLoggedInPage {
             onWelcomeGreeting().verifyText("Welcome $displayName!")
@@ -94,9 +98,9 @@ class MockNetworkLoginTest {
 
         val activityScenario = launchActivity<LoginActivity>()
 
-        startOnPage<LoginPage> {
+        composeTestRule.startOnPage<LoginPage> {
             enterInfo(username, password)
-            onSignInOrRegisterButton().click()
+            onSignInOrRegisterButton().performClick()
             onErrorMessage().verifyText(expectedError).verifyVisible()
         }
 

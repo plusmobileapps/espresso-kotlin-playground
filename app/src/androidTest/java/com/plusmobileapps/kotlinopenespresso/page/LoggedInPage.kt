@@ -6,7 +6,7 @@ import com.plusmobileapps.kotlinopenespresso.extensions.PageScope
 import com.plusmobileapps.kotlinopenespresso.extensions.navigateToPageWithClick
 import com.plusmobileapps.kotlinopenespresso.extensions.verifyVisible
 
-class LoggedInPage : BasePage {
+class LoggedInPage: BasePage() {
 
     override fun assertScreen() {
         onWelcomeGreeting().verifyVisible()
