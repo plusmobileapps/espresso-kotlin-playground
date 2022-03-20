@@ -3,6 +3,7 @@ package com.plusmobileapps.kotlinopenespresso.test
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.core.app.launchActivity
 import com.plusmobileapps.kotlinopenespresso.extensions.startOnPage
+import com.plusmobileapps.kotlinopenespresso.extensions.verifyVisible
 import com.plusmobileapps.kotlinopenespresso.page.MapPage
 import com.plusmobileapps.kotlinopenespresso.ui.MapActivity
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
@@ -27,7 +28,7 @@ class MapTest {
         val scenario = launchActivity<MapActivity>()
 
         composeTestRule.startOnPage<MapPage>  {
-            assertTrue(onMarker(MapActivity.SYDNEY_MARKER_TITLE).exists())
+            onMarker(MapActivity.SYDNEY_MARKER_TITLE).verifyVisible()
         }
 
         scenario.close()
