@@ -17,6 +17,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.plusmobileapps.kotlinopenespresso.R
 import com.plusmobileapps.kotlinopenespresso.databinding.ActivityLoginBinding
+import com.plusmobileapps.kotlinopenespresso.ui.MapActivity
 import com.plusmobileapps.kotlinopenespresso.ui.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,6 +40,10 @@ class LoginActivity : AppCompatActivity() {
 
         binding.settingsButton.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
+        }
+
+        binding.mapButton.setOnClickListener {
+            startActivity(Intent(this, MapActivity::class.java))
         }
 
         loginButton.setContent {
