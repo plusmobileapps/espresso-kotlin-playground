@@ -30,6 +30,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(map: GoogleMap) {
         this.map = map
+        map.setOnMarkerClickListener { marker ->
+            true // overriding listener prevents the info window from showing
+        }
         // Add a marker in Sydney and move the camera
         val sydney = LatLng(-34.0, 151.0)
         map.addMarker(
