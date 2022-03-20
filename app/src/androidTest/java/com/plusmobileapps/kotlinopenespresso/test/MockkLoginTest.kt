@@ -10,6 +10,7 @@ import com.plusmobileapps.kotlinopenespresso.data.model.LoggedInUser
 import com.plusmobileapps.kotlinopenespresso.extensions.*
 import com.plusmobileapps.kotlinopenespresso.page.LoginPage
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
+import com.plusmobileapps.kotlinopenespresso.util.TestCountingIdlingResource
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

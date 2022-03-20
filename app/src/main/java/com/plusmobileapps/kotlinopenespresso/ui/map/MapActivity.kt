@@ -1,6 +1,7 @@
 package com.plusmobileapps.kotlinopenespresso.ui.map
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -14,13 +15,18 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.plusmobileapps.kotlinopenespresso.R
 import com.plusmobileapps.kotlinopenespresso.databinding.MapDetailBottomSheetBinding
 import com.plusmobileapps.kotlinopenespresso.databinding.MapFragmentBinding
+import com.plusmobileapps.kotlinopenespresso.util.CountingIdlingResource
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding: MapFragmentBinding
     private lateinit var bottomSheetBinding: MapDetailBottomSheetBinding
+
+    @Inject
+    lateinit var countingIdlingResource: CountingIdlingResource
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
 
@@ -32,6 +38,19 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         bottomSheetBinding = MapDetailBottomSheetBinding.bind(binding.mapDetailBottomSheet.root)
         setContentView(binding.root)
         bottomSheetBehavior = BottomSheetBehavior.from(binding.standardBottomSheet)
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                Log.d("andrew", "New state: $newState")
+                if (newState == BottomSheetBehavior.STATE_SETTLING) {
+                    countingIdlingResource.increment()
+                } else {
+                    countingIdlingResource.decrement()
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        })
         bottomSheetBehavior.isHideable = true
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         bottomSheetBinding.imageButton.setOnClickListener {
