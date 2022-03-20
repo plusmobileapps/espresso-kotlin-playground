@@ -81,19 +81,6 @@ class MockkLoginTest {
         scenario.close()
     }
 
-    @Test
-    fun clickOnMapMarker() {
-
-        val scenario = launchActivity<LoginActivity>()
-
-        composeTestRule.startOnPage<LoggedInPage>()
-            .goToMap {
-                onMarker(MapActivity.SYDNEY_MARKER_TITLE).exists()
-            }
-
-        scenario.close()
-    }
-
     private fun everyLoginReturns(result: () -> Result<LoggedInUser>) {
         coEvery { loginDataSource.login(email, password) } returns result()
     }
