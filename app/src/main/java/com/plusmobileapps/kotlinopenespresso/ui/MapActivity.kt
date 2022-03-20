@@ -38,7 +38,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         map.addMarker(
             MarkerOptions()
             .position(sydney)
-            .title("Marker in Sydney"))
+            .title(SYDNEY_MARKER_TITLE))
         map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    }
+
+    companion object {
+        const val SYDNEY_MARKER_TITLE = "Marker in Sydney"
     }
 }

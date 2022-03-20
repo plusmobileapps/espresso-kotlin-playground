@@ -38,4 +38,5 @@ class LoginPage : BasePage() {
     fun goToLoggedInPage(block: PageScope<LoggedInPage>): LoggedInPage =
         navigateToPageWithClick(onSignInOrRegisterButton(), block)
 
+
 }

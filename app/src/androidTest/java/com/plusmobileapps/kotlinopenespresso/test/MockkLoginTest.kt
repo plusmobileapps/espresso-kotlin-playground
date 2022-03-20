@@ -8,7 +8,9 @@ import com.plusmobileapps.kotlinopenespresso.data.LoginDataSource
 import com.plusmobileapps.kotlinopenespresso.data.Result
 import com.plusmobileapps.kotlinopenespresso.data.model.LoggedInUser
 import com.plusmobileapps.kotlinopenespresso.extensions.*
+import com.plusmobileapps.kotlinopenespresso.page.LoggedInPage
 import com.plusmobileapps.kotlinopenespresso.page.LoginPage
+import com.plusmobileapps.kotlinopenespresso.ui.MapActivity
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -75,6 +77,19 @@ class MockkLoginTest {
             onEmail().typeText("2")
             onPassword().verifyTextFieldError(R.string.invalid_password)
         }
+
+        scenario.close()
+    }
+
+    @Test
+    fun clickOnMapMarker() {
+
+        val scenario = launchActivity<LoginActivity>()
+
+        composeTestRule.startOnPage<LoggedInPage>()
+            .goToMap {
+                onMarker(MapActivity.SYDNEY_MARKER_TITLE).exists()
+            }
 
         scenario.close()
     }
