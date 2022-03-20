@@ -1,6 +1,8 @@
-package com.plusmobileapps.kotlinopenespresso.ui
+package com.plusmobileapps.kotlinopenespresso.ui.map
 
 import android.os.Bundle
+import android.view.View
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -8,7 +10,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.plusmobileapps.kotlinopenespresso.R
+import com.plusmobileapps.kotlinopenespresso.databinding.MapDetailBottomSheetBinding
 import com.plusmobileapps.kotlinopenespresso.databinding.MapFragmentBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,14 +20,23 @@ import dagger.hilt.android.AndroidEntryPoint
 class MapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding: MapFragmentBinding
+    private lateinit var bottomSheetBinding: MapDetailBottomSheetBinding
+
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
 
     private lateinit var map: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = MapFragmentBinding.inflate(layoutInflater)
+        bottomSheetBinding = MapDetailBottomSheetBinding.bind(binding.mapDetailBottomSheet.root)
         setContentView(binding.root)
-
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.standardBottomSheet)
+        bottomSheetBehavior.isHideable = true
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        bottomSheetBinding.imageButton.setOnClickListener {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        }
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
@@ -31,6 +44,10 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         this.map = map
         map.setOnMarkerClickListener { marker ->
+            marker.title?.let {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                bottomSheetBinding.mapMarkerDetailTextview.text = it
+            }
             true // overriding listener prevents the info window from showing
         }
         // Add a marker in Sydney and move the camera

@@ -8,9 +8,7 @@ import com.plusmobileapps.kotlinopenespresso.data.LoginDataSource
 import com.plusmobileapps.kotlinopenespresso.data.Result
 import com.plusmobileapps.kotlinopenespresso.data.model.LoggedInUser
 import com.plusmobileapps.kotlinopenespresso.extensions.*
-import com.plusmobileapps.kotlinopenespresso.page.LoggedInPage
 import com.plusmobileapps.kotlinopenespresso.page.LoginPage
-import com.plusmobileapps.kotlinopenespresso.ui.MapActivity
 import com.plusmobileapps.kotlinopenespresso.ui.login.LoginActivity
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule

@@ -17,7 +17,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.plusmobileapps.kotlinopenespresso.R
 import com.plusmobileapps.kotlinopenespresso.databinding.ActivityLoginBinding
-import com.plusmobileapps.kotlinopenespresso.ui.MapActivity
+import com.plusmobileapps.kotlinopenespresso.ui.map.MapActivity
 import com.plusmobileapps.kotlinopenespresso.ui.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
 

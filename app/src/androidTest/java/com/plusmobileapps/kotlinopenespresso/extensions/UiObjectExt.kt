@@ -4,7 +4,7 @@ import androidx.test.uiautomator.UiObject
 import org.junit.Assert.assertTrue
 
 fun UiObject.performClick(): UiObject {
-    click()
+    assertTrue("Clicking UiObject", click())
     return this
 }
 
