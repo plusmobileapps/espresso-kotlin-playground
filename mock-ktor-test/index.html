@@ -1,0 +1,825 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.9">
+    
+    
+      
+        <title>Mock Ktor Test - Espresso Kotlin Playground</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.120efc48.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.9647289d.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mock-ktor-testing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Espresso Kotlin Playground" class="md-header__button md-logo" aria-label="Espresso Kotlin Playground" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Espresso Kotlin Playground
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mock Ktor Test
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/plusmobileapps/espresso-kotlin-playground" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Espresso Kotlin Playground" class="md-nav__button md-logo" aria-label="Espresso Kotlin Playground" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Espresso Kotlin Playground
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/plusmobileapps/espresso-kotlin-playground" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Welcome
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../page-object-pattern/" class="md-nav__link">
+        Page Object Pattern
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../espresso-extensions/" class="md-nav__link">
+        Espresso Extensions
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../navigation-dsl/" class="md-nav__link">
+        Navigation DSL
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mockk-test/" class="md-nav__link">
+        Mockk Test
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Mock Ktor Test
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Mock Ktor Test
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    Architecture
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-ktor-and-kotlinxserialization" class="md-nav__link">
+    Adding Ktor and KotlinxSerialization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-an-http-client" class="md-nav__link">
+    Create an Http Client
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implement-the-api-call" class="md-nav__link">
+    Implement the API Call
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write-a-mocknetworkhelper" class="md-nav__link">
+    Write a MockNetworkHelper
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write-the-test" class="md-nav__link">
+    Write the test
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#counting-idling-resource" class="md-nav__link">
+    Counting Idling Resource
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    Resources
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integrate-with-api/" class="md-nav__link">
+        Integrate With API
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jetpack-compose/" class="md-nav__link">
+        Jetpack Compose
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../google-maps/" class="md-nav__link">
+        Google Maps
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    Architecture
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-ktor-and-kotlinxserialization" class="md-nav__link">
+    Adding Ktor and KotlinxSerialization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#create-an-http-client" class="md-nav__link">
+    Create an Http Client
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implement-the-api-call" class="md-nav__link">
+    Implement the API Call
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write-a-mocknetworkhelper" class="md-nav__link">
+    Write a MockNetworkHelper
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write-the-test" class="md-nav__link">
+    Write the test
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#counting-idling-resource" class="md-nav__link">
+    Counting Idling Resource
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resources" class="md-nav__link">
+    Resources
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/plusmobileapps/espresso-kotlin-playground/edit/master/docs/mock-ktor-test.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+<h1 id="mock-ktor-testing">Mock Ktor Testing</h1>
+<p>One of the most popular frameworks used for networking on Android most notably would be <a href="https://square.github.io/retrofit/">Retrofit</a> and is a great library to use with a simple API. Although when it comes to writing a mock network test in Espresso, the solution to mock the network traffic is running a <a href="https://github.com/square/okhttp/tree/master/mockwebserver">MockWebServer</a> or any other JVM server of your choice. Instead of running a separate server, what if the networking library used could swap out the underlying engine executing the Http calls with a mock engine? That is exactly what <a href="https://ktor.io/">Ktor</a> from Jetbrains can do with the <a href="https://ktor.io/docs/http-client-testing.html"><code>MockEngine</code></a> and will be used to write a mock network Espresso test. </p>
+<h2 id="architecture">Architecture</h2>
+<p>Working with the previous architecture, a Ktor <code>HttpClient</code> will be injected into the <code>LoginDataSource</code> except the test will inject the <code>MockEngine</code>. </p>
+<p><img alt="" src="../img/login-mock-network.png" /></p>
+<h2 id="adding-ktor-and-kotlinxserialization">Adding Ktor and KotlinxSerialization</h2>
+<div class="highlight"><pre><span></span><code><span class="c1">// build.gradle </span>
+
+<span class="n">buildscript</span> <span class="o">{</span>
+    <span class="n">ext</span><span class="o">.</span><span class="na">kotlin_version</span> <span class="o">=</span> <span class="s2">&quot;1.6.0&quot;</span>
+    <span class="n">ext</span><span class="o">.</span><span class="na">ktor_version</span> <span class="o">=</span> <span class="s2">&quot;1.6.7&quot;</span>
+
+    <span class="n">dependencies</span> <span class="o">{</span>
+        <span class="n">classpath</span> <span class="s2">&quot;org.jetbrains.kotlin:kotlin-serialization:$kotlin_version&quot;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// app/build.gradle   </span>
+<span class="n">plugins</span> <span class="o">{</span>
+    <span class="n">id</span> <span class="s1">&#39;org.jetbrains.kotlin.plugin.serialization&#39;</span>
+<span class="o">}</span>
+
+<span class="n">dependencies</span> <span class="o">{</span>
+
+    <span class="c1">// Ktor</span>
+    <span class="n">implementation</span> <span class="s2">&quot;io.ktor:ktor-client-android:$ktor_version&quot;</span>
+    <span class="n">implementation</span> <span class="s2">&quot;io.ktor:ktor-client-serialization-jvm:$ktor_version&quot;</span>
+    <span class="n">implementation</span> <span class="s2">&quot;io.ktor:ktor-client-json:$ktor_version&quot;</span>
+    <span class="n">androidTestImplementation</span> <span class="s2">&quot;io.ktor:ktor-client-mock:$ktor_version&quot;</span>
+
+    <span class="c1">// Kotlinx Serialization - JSON</span>
+    <span class="n">implementation</span> <span class="s2">&quot;org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0&quot;</span>
+
+<span class="o">}</span>
+</code></pre></div>
+<h2 id="create-an-http-client">Create an Http Client</h2>
+<div class="highlight"><pre><span></span><code><span class="nd">@Module</span>
+<span class="nd">@InstallIn</span><span class="p">(</span><span class="n">SingletonComponent</span><span class="o">::</span><span class="n">class</span><span class="p">)</span>
+<span class="kd">object</span> <span class="nc">HttpEngineModule</span> <span class="p">{</span>
+    <span class="nd">@Provides</span>
+    <span class="nd">@Singleton</span>
+    <span class="kd">fun</span> <span class="nf">providesHttpEngine</span><span class="p">():</span> <span class="n">HttpClientEngine</span> <span class="o">=</span> <span class="n">Android</span><span class="p">.</span><span class="na">create</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="nd">@Module</span>
+<span class="nd">@InstallIn</span><span class="p">(</span><span class="n">SingletonComponent</span><span class="o">::</span><span class="n">class</span><span class="p">)</span>
+<span class="kd">object</span> <span class="nc">HttpClientModule</span> <span class="p">{</span>
+
+    <span class="nd">@Provides</span>
+    <span class="nd">@Singleton</span>
+    <span class="kd">fun</span> <span class="nf">providesHttpClient</span><span class="p">(</span><span class="n">httpClientEngine</span><span class="p">:</span> <span class="n">HttpClientEngine</span><span class="p">):</span> <span class="n">HttpClient</span> <span class="o">=</span>
+        <span class="n">HttpClient</span><span class="p">(</span><span class="n">httpClientEngine</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">install</span><span class="p">(</span><span class="n">JsonFeature</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">serializer</span> <span class="o">=</span> <span class="n">KotlinxSerializer</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="implement-the-api-call">Implement the API Call</h2>
+<div class="highlight"><pre><span></span><code><span class="nd">@Serializable</span>
+<span class="kd">data</span> <span class="kd">class</span> <span class="nc">LoginRequest</span><span class="p">(</span><span class="kd">val</span> <span class="nv">username</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kd">val</span> <span class="nv">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+
+<span class="nd">@Serializable</span>
+<span class="kd">data</span> <span class="kd">class</span> <span class="nc">LoginResponse</span><span class="p">(</span><span class="kd">val</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="kd">val</span> <span class="nv">displayName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+
+<span class="nd">@Serializable</span>
+<span class="kd">data</span> <span class="kd">class</span> <span class="nc">LoginError</span><span class="p">(</span><span class="kd">val</span> <span class="nv">errorCode</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="kd">val</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span>
+
+<span class="kd">class</span> <span class="nc">LoginDataSource</span> <span class="nd">@Inject</span> <span class="k">constructor</span><span class="p">(</span><span class="kd">private</span> <span class="kd">val</span> <span class="nv">httpClient</span><span class="p">:</span> <span class="n">HttpClient</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="kd">companion</span> <span class="kd">object</span> <span class="err">{</span>
+        <span class="kd">const</span> <span class="kd">val</span> <span class="nv">LOGIN_URL</span> <span class="o">=</span> <span class="s">&quot;https://plusmobileapps.com/login&quot;</span>
+    <span class="p">}</span>
+
+    <span class="kd">suspend</span> <span class="kd">fun</span> <span class="nf">login</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">):</span> <span class="n">Result</span><span class="o">&lt;</span><span class="n">LoggedInUser</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">withContext</span><span class="p">(</span><span class="n">Dispatchers</span><span class="p">.</span><span class="na">IO</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="kd">val</span> <span class="nv">response</span> <span class="o">=</span> <span class="n">httpClient</span><span class="p">.</span><span class="na">post</span><span class="o">&lt;</span><span class="n">LoginResponse</span><span class="o">&gt;</span><span class="p">(</span><span class="n">LOGIN_URL</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">contentType</span><span class="p">(</span><span class="n">ContentType</span><span class="p">.</span><span class="na">Application</span><span class="p">.</span><span class="na">Json</span><span class="p">)</span>
+                <span class="n">body</span> <span class="o">=</span> <span class="n">LoginRequest</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="kd">val</span> <span class="nv">user</span> <span class="o">=</span> <span class="n">LoggedInUser</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="na">id</span><span class="p">,</span> <span class="n">response</span><span class="p">.</span><span class="na">displayName</span><span class="p">)</span>
+            <span class="n">Result</span><span class="p">.</span><span class="na">Success</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">e</span><span class="p">:</span> <span class="n">Throwable</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">val</span> <span class="nv">errorMessage</span> <span class="o">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">e</span> <span class="k">is</span> <span class="n">ClientRequestException</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">val</span> <span class="nv">response</span> <span class="o">=</span> <span class="n">e</span><span class="p">.</span><span class="na">response</span><span class="p">.</span><span class="na">readText</span><span class="p">(</span><span class="n">Charsets</span><span class="p">.</span><span class="na">UTF_8</span><span class="p">)</span>
+                <span class="kd">val</span> <span class="nv">error</span> <span class="o">=</span> <span class="n">Json</span><span class="p">.</span><span class="na">decodeFromString</span><span class="o">&lt;</span><span class="n">LoginError</span><span class="o">&gt;</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+                <span class="n">error</span><span class="p">.</span><span class="na">message</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="s">&quot;Don&#39;t know the error&quot;</span>
+            <span class="p">}</span>
+            <span class="n">Result</span><span class="p">.</span><span class="na">Error</span><span class="p">(</span><span class="n">IOException</span><span class="p">(</span><span class="n">errorMessage</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="write-a-mocknetworkhelper">Write a MockNetworkHelper</h2>
+<p>In order to keep the tests a tidy, it would help to write a <code>MockNetworkHelper</code> to abstract away and consolidate the logic for responding to specific endpoints. </p>
+<div class="highlight"><pre><span></span><code><span class="kd">class</span> <span class="nc">MockNetworkTestHelper</span> <span class="p">{</span>
+
+    <span class="kd">val</span> <span class="nv">httpClientEngine</span><span class="p">:</span> <span class="n">HttpClientEngine</span> <span class="o">=</span> <span class="n">MockEngine</span> <span class="p">{</span> <span class="n">request</span> <span class="o">-&gt;</span>
+        <span class="k">when</span> <span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="na">url</span><span class="p">.</span><span class="na">fullUrl</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">LoginDataSource</span><span class="p">.</span><span class="na">LOGIN_URL</span> <span class="o">-&gt;</span> <span class="n">getLoginResponse</span><span class="p">.</span><span class="na">invoke</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
+            <span class="k">else</span> <span class="o">-&gt;</span> <span class="n">error</span><span class="p">(</span><span class="s">&quot;Unhandled </span><span class="si">${</span><span class="n">request</span><span class="p">.</span><span class="na">url</span><span class="p">.</span><span class="na">fullUrl</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">private</span> <span class="kd">var</span> <span class="nv">getLoginResponse</span><span class="p">:</span> <span class="n">MockRequestHandler</span> <span class="o">=</span> <span class="n">defaultLoginResponseHandler</span>
+
+    <span class="kd">fun</span> <span class="nf">everyLoginReturns</span><span class="p">(</span><span class="n">response</span><span class="p">:</span> <span class="n">MockRequestHandler</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="na">getLoginResponse</span> <span class="o">=</span> <span class="n">response</span>
+    <span class="p">}</span>
+
+    <span class="kd">fun</span> <span class="nf">destroy</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">getLoginResponse</span> <span class="o">=</span> <span class="n">defaultLoginResponseHandler</span>
+    <span class="p">}</span>
+
+    <span class="kd">companion</span> <span class="kd">object</span> <span class="err">{</span>
+        <span class="kd">val</span> <span class="nv">defaultLoginResponseHandler</span><span class="p">:</span> <span class="n">MockRequestHandler</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">respond</span><span class="p">(</span>
+                <span class="n">Json</span><span class="p">.</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">LoginResponse</span><span class="p">(</span><span class="s">&quot;default-id&quot;</span><span class="p">,</span> <span class="s">&quot;Buzz Killington&quot;</span><span class="p">)),</span>
+                <span class="n">HttpStatusCode</span><span class="p">.</span><span class="na">OK</span><span class="p">,</span>
+                <span class="n">headersOf</span><span class="p">(</span><span class="n">HttpHeaders</span><span class="p">.</span><span class="na">ContentType</span><span class="p">,</span> <span class="n">ContentType</span><span class="p">.</span><span class="na">Application</span><span class="p">.</span><span class="na">Json</span><span class="p">.</span><span class="na">toString</span><span class="p">())</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">val</span> <span class="nv">Url</span><span class="p">.</span><span class="na">hostWithPortIfRequired</span><span class="p">:</span> <span class="kt">String</span> <span class="k">get</span><span class="p">()</span> <span class="o">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">port</span> <span class="o">==</span> <span class="n">protocol</span><span class="p">.</span><span class="na">defaultPort</span><span class="p">)</span> <span class="n">host</span> <span class="k">else</span> <span class="n">hostWithPort</span>
+<span class="kd">val</span> <span class="nv">Url</span><span class="p">.</span><span class="na">fullUrl</span><span class="p">:</span> <span class="kt">String</span> <span class="k">get</span><span class="p">()</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">${</span><span class="n">protocol</span><span class="p">.</span><span class="na">name</span><span class="si">}</span><span class="s">://</span><span class="si">$</span><span class="n">hostWithPortIfRequired</span><span class="si">$</span><span class="n">fullPath</span><span class="s">&quot;</span>
+</code></pre></div>
+<h2 id="write-the-test">Write the test</h2>
+<div class="highlight"><pre><span></span><code><span class="nd">@UninstallModules</span><span class="p">(</span><span class="n">HttpEngineModule</span><span class="o">::</span><span class="n">class</span><span class="p">)</span>
+<span class="nd">@HiltAndroidTest</span>
+<span class="kd">class</span> <span class="nc">MockNetworkLoginTest</span> <span class="p">{</span>
+
+    <span class="nd">@get</span><span class="p">:</span><span class="n">Rule</span>
+    <span class="kd">var</span> <span class="nv">hiltRule</span> <span class="o">=</span> <span class="n">HiltAndroidRule</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
+
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">networkHelper</span> <span class="o">=</span> <span class="n">MockNetworkTestHelper</span><span class="p">()</span>
+
+    <span class="nd">@BindValue</span>
+    <span class="nd">@JvmField</span>
+    <span class="kd">val</span> <span class="nv">mockClient</span><span class="p">:</span> <span class="n">HttpClientEngine</span> <span class="o">=</span> <span class="n">networkHelper</span><span class="p">.</span><span class="na">httpClientEngine</span>
+
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">username</span> <span class="o">=</span> <span class="s">&quot;andrew&quot;</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">password</span> <span class="o">=</span> <span class="s">&quot;password123&quot;</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">displayName</span> <span class="o">=</span> <span class="s">&quot;Buzz Killington&quot;</span>
+
+    <span class="nd">@After</span>
+    <span class="kd">fun</span> <span class="nf">tearDown</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">networkHelper</span><span class="p">.</span><span class="na">destroy</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">fun</span> <span class="nf">successfulLogin</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">networkHelper</span><span class="p">.</span><span class="na">everyLoginReturns</span> <span class="p">{</span>
+            <span class="n">respond</span><span class="p">(</span>
+                <span class="n">Json</span><span class="p">.</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">LoginResponse</span><span class="p">(</span><span class="s">&quot;first-id&quot;</span><span class="p">,</span> <span class="n">displayName</span><span class="p">)),</span>
+                <span class="n">HttpStatusCode</span><span class="p">.</span><span class="na">OK</span><span class="p">,</span>
+                <span class="n">headersOf</span><span class="p">(</span><span class="n">HttpHeaders</span><span class="p">.</span><span class="na">ContentType</span><span class="p">,</span> <span class="n">ContentType</span><span class="p">.</span><span class="na">Application</span><span class="p">.</span><span class="na">Json</span><span class="p">.</span><span class="na">toString</span><span class="p">())</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="kd">val</span> <span class="nv">activityScenario</span> <span class="o">=</span> <span class="n">launchActivity</span><span class="o">&lt;</span><span class="n">LoginActivity</span><span class="o">&gt;</span><span class="p">()</span>
+
+        <span class="n">startOnPage</span><span class="o">&lt;</span><span class="n">LoginPage</span><span class="o">&gt;</span> <span class="p">{</span>
+            <span class="n">enterInfo</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+        <span class="p">}.</span><span class="na">goToLoggedInPage</span> <span class="p">{</span>
+            <span class="n">onWelcomeGreeting</span><span class="p">().</span><span class="na">verifyText</span><span class="p">(</span><span class="s">&quot;Welcome </span><span class="si">$</span><span class="n">displayName</span><span class="s">!&quot;</span><span class="p">)</span>
+        <span class="p">}.</span><span class="na">goToSettings</span><span class="p">()</span>
+
+        <span class="n">activityScenario</span><span class="p">.</span><span class="na">close</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">fun</span> <span class="nf">errorLogin</span><span class="p">()</span> <span class="p">{</span>
+        <span class="kd">val</span> <span class="nv">expectedError</span> <span class="o">=</span> <span class="n">LoginError</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="s">&quot;There was an error&quot;</span><span class="p">)</span>
+        <span class="n">networkHelper</span><span class="p">.</span><span class="na">everyLoginReturns</span> <span class="p">{</span>
+            <span class="n">respond</span><span class="p">(</span>
+                <span class="n">Json</span><span class="p">.</span><span class="na">encodeToString</span><span class="p">(</span><span class="n">LoginError</span><span class="p">.</span><span class="na">serializer</span><span class="p">(),</span> <span class="n">expectedError</span><span class="p">),</span>
+                <span class="n">HttpStatusCode</span><span class="p">.</span><span class="na">BadRequest</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="kd">val</span> <span class="nv">activityScenario</span> <span class="o">=</span> <span class="n">launchActivity</span><span class="o">&lt;</span><span class="n">LoginActivity</span><span class="o">&gt;</span><span class="p">()</span>
+
+        <span class="n">startOnPage</span><span class="o">&lt;</span><span class="n">LoginPage</span><span class="o">&gt;</span> <span class="p">{</span>
+            <span class="n">enterInfo</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+            <span class="n">onSignInOrRegisterButton</span><span class="p">().</span><span class="na">click</span><span class="p">()</span>
+            <span class="n">onErrorMessage</span><span class="p">().</span><span class="na">verifyText</span><span class="p">(</span><span class="n">expectedError</span><span class="p">.</span><span class="na">message</span><span class="p">).</span><span class="na">verifyVisible</span><span class="p">()</span>
+        <span class="p">}</span>
+
+        <span class="n">activityScenario</span><span class="p">.</span><span class="na">close</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="counting-idling-resource">Counting Idling Resource</h2>
+<div class="highlight"><pre><span></span><code><span class="nd">@HiltViewModel</span>
+<span class="kd">class</span> <span class="nc">LoginViewModel</span> <span class="nd">@Inject</span> <span class="k">constructor</span><span class="p">(</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">loginRepository</span><span class="p">:</span> <span class="n">LoginRepository</span><span class="p">,</span>
+    <span class="kd">private</span> <span class="kd">val</span> <span class="nv">idlingResource</span><span class="p">:</span> <span class="n">CountingIdlingResource</span>
+<span class="p">)</span> <span class="p">:</span> <span class="n">ViewModel</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="kd">fun</span> <span class="nf">login</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">idlingResource</span><span class="p">.</span><span class="na">increment</span><span class="p">()</span>
+        <span class="n">viewModelScope</span><span class="p">.</span><span class="na">launch</span> <span class="p">{</span>
+            <span class="c1">// delay is just for local development to ensure espresso waits for job to finish</span>
+            <span class="n">delay</span><span class="p">(</span><span class="m">2</span><span class="n">_000</span><span class="p">)</span>
+
+            <span class="c1">// can be launched in a separate asynchronous job</span>
+            <span class="kd">val</span> <span class="nv">result</span> <span class="o">=</span> <span class="n">loginRepository</span><span class="p">.</span><span class="na">login</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+
+            <span class="k">when</span> <span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">is</span> <span class="n">Result</span><span class="p">.</span><span class="na">Error</span> <span class="o">-&gt;</span> <span class="n">LoginResult</span><span class="p">(</span><span class="n">errorString</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="na">exception</span><span class="p">.</span><span class="na">message</span><span class="p">)</span>
+                <span class="k">is</span> <span class="n">Result</span><span class="p">.</span><span class="na">Success</span> <span class="o">-&gt;</span> <span class="n">LoginResult</span><span class="p">(</span><span class="n">success</span> <span class="o">=</span> <span class="n">LoggedInUserView</span><span class="p">(</span><span class="n">displayName</span> <span class="o">=</span> <span class="n">result</span><span class="p">.</span><span class="na">data</span><span class="p">.</span><span class="na">displayName</span><span class="p">))</span>
+            <span class="p">}.</span><span class="na">let</span> <span class="p">{</span> <span class="n">_loginResult</span><span class="p">.</span><span class="na">value</span> <span class="o">=</span> <span class="nb">it</span> <span class="p">}</span>
+
+            <span class="n">idlingResource</span><span class="p">.</span><span class="na">decrement</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://github.com/plusmobileapps/espresso-kotlin-playground/commit/8e5766bd0fd175ffadfa64d046b386ed04562d3a">Add ktor, kotlinx.serialization, and mock network test commit</a></li>
+<li><a href="https://github.com/plusmobileapps/espresso-kotlin-playground/commit/234a8950325a315a287a4defb3b18e646a81330f">Add CI/CD workflow commit</a></li>
+<li><a href="https://github.com/plusmobileapps/espresso-kotlin-playground/commit/9a2747eb768f2a70640ef0f10d35ce36fccec71c">Add counting idling resource to fix flaky test commit</a></li>
+<li><a href="https://github.com/plusmobileapps/espresso-kotlin-playground/tree/6-mock-ktor-network-test"><code>6-mock-ktor-network-test</code> branch</a></li>
+<li><a href="https://github.com/Kotlin/kotlinx.coroutines/issues/242#issuecomment-561503344">Coroutine idling resource workaround</a> and <a href="https://github.com/plusmobileapps/espresso-kotlin-playground/commit/b539a4bcc0f25455fbcc267d4b12d02635475c65">commit</a></li>
+</ul>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../mockk-test/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Mockk Test" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Mockk Test
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../integrate-with-api/" class="md-footer__link md-footer__link--next" aria-label="Next: Integrate With API" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Integrate With API
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections"], "search": "../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.6e54b5cd.min.js"></script>
+      
+    
+  </body>
+</html>
