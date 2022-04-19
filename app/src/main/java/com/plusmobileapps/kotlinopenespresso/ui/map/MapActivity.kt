@@ -37,6 +37,11 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = MapFragmentBinding.inflate(layoutInflater)
         bottomSheetBinding = MapDetailBottomSheetBinding.bind(binding.mapDetailBottomSheet.root)
         setContentView(binding.root)
+        setupBottomSheet()
+        setUpMap()
+    }
+
+    private fun setupBottomSheet() {
         bottomSheetBehavior = BottomSheetBehavior.from(binding.standardBottomSheet)
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -56,6 +61,9 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         bottomSheetBinding.imageButton.setOnClickListener {
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
+    }
+
+    private fun setUpMap() {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
@@ -74,7 +82,7 @@ class MapActivity : AppCompatActivity(), OnMapReadyCallback {
         map.addMarker(
             MarkerOptions()
             .position(sydney)
-            .title(SYDNEY_MARKER_TITLE))
+            .title(SYDNEY_MARKER_TITLE)) // this title is what UIAutomator needs in order to find the marker
         map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 

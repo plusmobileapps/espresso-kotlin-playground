@@ -1,7 +1,6 @@
 package com.plusmobileapps.kotlinopenespresso.test
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.test.core.app.launchActivity
 import androidx.test.espresso.IdlingRegistry
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.plusmobileapps.kotlinopenespresso.di.EspressoModule
@@ -47,19 +46,13 @@ class MapTest {
 
     @Test
     fun markerIsInViewOnStart() {
-        val scenario = launchActivity<MapActivity>()
-
         composeTestRule.startOnPage<MapPage>  {
             onMarker(MapActivity.SYDNEY_MARKER_TITLE).verifyVisible()
         }
-
-        scenario.close()
     }
 
     @Test
     fun clickMapMarkerOpensBottomSheet() {
-        val scenario = launchActivity<MapActivity>()
-
         composeTestRule.startOnPage<MapPage>  {
             verifyBottomSheetState(BottomSheetBehavior.STATE_HIDDEN)
             onMarker(MapActivity.SYDNEY_MARKER_TITLE).performClick()
@@ -68,7 +61,5 @@ class MapTest {
             onCloseBottomSheetButton().click()
             verifyBottomSheetState(BottomSheetBehavior.STATE_HIDDEN)
         }
-
-        scenario.close()
     }
 }

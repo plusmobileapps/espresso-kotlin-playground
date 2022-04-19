@@ -33,10 +33,20 @@ class MapPage : BasePage() {
     }
 }
 
+fun getFriendlyBottomSheetBehaviorStateDescription(state: Int): String = when (state) {
+    BottomSheetBehavior.STATE_DRAGGING -> "dragging"
+    BottomSheetBehavior.STATE_SETTLING -> "settling"
+    BottomSheetBehavior.STATE_EXPANDED -> "expanded"
+    BottomSheetBehavior.STATE_COLLAPSED -> "collapsed"
+    BottomSheetBehavior.STATE_HIDDEN -> "hidden"
+    BottomSheetBehavior.STATE_HALF_EXPANDED -> "half-expanded"
+    else -> "unknown but the value was $state"
+}
+
 fun hasBottomSheetBehaviorState(expectedState: Int): Matcher<in View>? {
     return object : BoundedMatcher<View, View>(View::class.java) {
         override fun describeTo(description: Description) {
-            description.appendText("has BottomSheetBehavior state $expectedState")
+            description.appendText("has BottomSheetBehavior state: ${getFriendlyBottomSheetBehaviorStateDescription(expectedState)}")
         }
 
         override fun matchesSafely(view: View): Boolean {
