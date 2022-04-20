@@ -2,7 +2,6 @@ package com.plusmobileapps.kotlinopenespresso.test
 
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.performClick
-import androidx.test.core.app.launchActivity
 import androidx.test.espresso.IdlingRegistry
 import com.plusmobileapps.model.LoginResponse
 import com.plusmobileapps.kotlinopenespresso.di.EspressoModule
@@ -62,7 +61,7 @@ class MockNetworkLoginTest {
     @After
     fun tearDown() {
         IdlingRegistry.getInstance().unregister(_idlingResource.instance)
-        networkHelper.destroy()
+        networkHelper.reset()
     }
 
     @Test
@@ -75,15 +74,12 @@ class MockNetworkLoginTest {
             )
         }
 
-        val activityScenario = launchActivity<LoginActivity>()
-
         composeTestRule.startOnPage<LoginPage> {
             enterInfo(username, password)
         }.goToLoggedInPage {
             onWelcomeGreeting().verifyText("Welcome $displayName!")
         }
 
-        activityScenario.close()
     }
 
     @Test
@@ -96,14 +92,10 @@ class MockNetworkLoginTest {
             )
         }
 
-        val activityScenario = launchActivity<LoginActivity>()
-
         composeTestRule.startOnPage<LoginPage> {
             enterInfo(username, password)
             onSignInOrRegisterButton().performClick()
             onErrorMessage().verifyText(expectedError).verifyVisible()
         }
-
-        activityScenario.close()
     }
 }

@@ -33,7 +33,7 @@ class MockNetworkTestHelper {
         this.getLoginResponse = response
     }
 
-    fun destroy() {
+    fun reset() {
         getLoginResponse = defaultLoginResponseHandler
     }
 

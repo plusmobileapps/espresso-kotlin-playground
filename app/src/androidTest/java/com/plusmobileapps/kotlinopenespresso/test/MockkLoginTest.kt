@@ -39,45 +39,34 @@ class MockkLoginTest {
     @Test
     fun successfulLogin() {
         everyLoginReturns { Result.Success(LoggedInUser("some-user-id", displayName)) }
-        val scenario = launchActivity<LoginActivity>()
 
         composeTestRule.startOnPage<LoginPage> {
             enterInfo(email, password)
         }.goToLoggedInPage {
             onWelcomeGreeting().verifyText("Welcome $displayName!")
         }.goToSettings()
-
-        scenario.close()
-
     }
 
     @Test
     fun errorLogin() {
         val expectedError = "Something bad happened"
         everyLoginReturns { Result.Error(IllegalArgumentException(expectedError)) }
-        val scenario = launchActivity<LoginActivity>()
 
         composeTestRule.startOnPage<LoginPage> {
             enterInfo(email, password);
             onSignInOrRegisterButton().performClick()
             onErrorMessage().verifyText(expectedError).verifyVisible()
         }
-
-        scenario.close()
     }
 
     @Test
     fun tooShortOfPasswordError() {
-        val scenario = launchActivity<LoginActivity>()
-
         composeTestRule.startOnPage<LoginPage> {
             onEmail().typeText("1")
             onPassword().typeText("4")
             onEmail().typeText("2")
             onPassword().verifyTextFieldError(R.string.invalid_password)
         }
-
-        scenario.close()
     }
 
     private fun everyLoginReturns(result: () -> Result<LoggedInUser>) {
