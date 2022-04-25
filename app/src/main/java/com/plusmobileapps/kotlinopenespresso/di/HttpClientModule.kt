@@ -7,8 +7,8 @@ import dagger.hilt.components.SingletonComponent
 import io.ktor.client.*
 import io.ktor.client.engine.*
 import io.ktor.client.engine.android.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.serialization.kotlinx.json.*
 import javax.inject.Singleton
 
 @Module
@@ -27,8 +27,8 @@ object HttpClientModule {
     @Singleton
     fun providesHttpClient(httpClientEngine: HttpClientEngine): HttpClient =
         HttpClient(httpClientEngine) {
-            install(JsonFeature) {
-                serializer = KotlinxSerializer()
+            install(ContentNegotiation) {
+                json()
             }
         }
 

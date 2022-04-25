@@ -6,7 +6,8 @@ import com.plusmobileapps.kotlinopenespresso.data.model.LoginError
 import com.plusmobileapps.kotlinopenespresso.data.model.LoginRequest
 import com.plusmobileapps.kotlinopenespresso.data.model.LoginResponse
 import io.ktor.client.*
-import io.ktor.client.features.*
+import io.ktor.client.call.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
@@ -29,21 +30,22 @@ class LoginDataSource @Inject constructor(private val httpClient: HttpClient) {
 
     suspend fun login(email: String, password: String): Result<LoggedInUser> = withContext(Dispatchers.IO) {
         try {
-            val response = httpClient.post<LoginResponse>(LOGIN_URL) {
+            val request = httpClient.post(LOGIN_URL) {
                 contentType(ContentType.Application.Json)
-                body = LoginRequest(email, password)
+                setBody(LoginRequest(email, password))
             }
-            val user = LoggedInUser(response.id, response.displayName)
-            Result.Success(user)
-        } catch (e: Throwable) {
-            val errorMessage = if (e is ClientRequestException) {
-                val response = e.response.readText(Charsets.UTF_8)
-                val error = Json.decodeFromString<LoginError>(response)
-                error.message
+            if (request.status.isSuccess()) {
+                val response = request.body<LoginResponse>()
+                val user = LoggedInUser(response.id, response.displayName)
+                Result.Success(user)
             } else {
-                "Don't know the error"
+                val response = request.bodyAsText()
+                val error = Json.decodeFromString<LoginError>(response)
+
+                Result.Error(IOException(error.message))
             }
-            Result.Error(IOException(errorMessage, e))
+        } catch (e: Throwable) {
+            Result.Error(IOException(e.message))
         }
     }
 
